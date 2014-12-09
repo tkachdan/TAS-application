@@ -1,0 +1,16 @@
+@main("Add object") {
+
+
+    <a class="button" href="@routes.Application.index()" id="back-button">
+
+        <button type="button" class="btn btn-primary" id="back-button" >
+            <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span> Back
+        </button>
+    </a>
+
+    <form action="@routes.Application.addBar()" method="post">
+        <label>Name</label> <input name="name" type="text">
+        <input type="submit">
+    </form>
+
+}

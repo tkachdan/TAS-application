@@ -1,0 +1,38 @@
+@(title: String)(content: Html)
+
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <title>@title</title>
+
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css">
+        <link rel="stylesheet" href="@routes.Assets.at("stylesheets/bootstrap.css")">
+        <link rel="stylesheet" href="@routes.Assets.at("stylesheets/main.css")">
+
+
+
+
+        <link rel="shortcut icon" type="image/png" href="@routes.Assets.at("images/favicon.png")">
+
+    </head>
+    <body>
+        <div class="container">
+            <div class="container">
+                <div class="page-header disabled">
+
+                        <span class="glyphicon glyphicon-plane" aria-hidden="true"></span>
+                        Travel agency application (TAS)
+
+                </div>
+            </div>
+
+            @content
+
+            <div class="container">
+                <div class="modal-footer">Footer (c)FEL CVUT 2014</div>
+            </div>
+        </div>
+    </body>
+</html>

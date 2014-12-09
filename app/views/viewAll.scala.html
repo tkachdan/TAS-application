@@ -1,0 +1,39 @@
+@(message: String)
+
+    @main("All data") {
+
+        <a class="button" href="@routes.Application.index()" id="back-button">
+
+            <button type="button" class="btn btn-primary" id="back-button" >
+                <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span> Back
+            </button>
+        </a>
+
+        <h2>Table</h2>
+
+        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut lorem eros, maximus a tempor commodo, vestibulum in orci. Suspendisse sed tempor magna. Nam at venenatis nulla, nec vestibulum dolor. Integer luctus venenatis neque. Curabitur vitae metus consequat, dignissim tortor in, interdum diam. Phasellus sollicitudin, velit dapibus malesuada semper, lacus libero porta dolor, eu iaculis massa dolor pharetra lorem. Fusce finibus molestie orci et euismod. Proin dignissim aliquam mi non varius.</p>
+
+        <div class="table-responsive">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Name</th>
+                    </tr>
+                </thead>
+                <tbody>
+                @Html(message)
+                </tbody>
+            </table>
+        </div>
+
+
+    }
+
+
+
+
+
+
+
+
