@@ -1,21 +1,16 @@
 package controllers;
 
 import persistence.models.Bar;
-
-import persistence.models.LoginForm;
-import play.data.DynamicForm;
 import play.data.Form;
 import play.db.ebean.Model;
-import play.mvc.*;
-
-import service.UserService;
-import service.impl.UserServiceImpl;
-import views.html.*;
-import views.html.helper.form;
+import play.mvc.Controller;
+import play.mvc.Result;
+import views.html.add;
+import views.html.edit;
+import views.html.index;
+import views.html.viewAll;
 
 import java.util.List;
-import java.util.Map;
-import java.util.logging.Logger;
 
 public class Application extends Controller {
 

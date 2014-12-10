@@ -13,7 +13,7 @@ POST        /bars                controllers.Application.addBar()
 
 GET         /login               controllers.Login.renderLogin()
 
-POST        /login               controllers.Login.login()
+POST        /login        controllers.Login.authenticate()
 
 POST        /bars/edit           controllers.Application.editBar()
 

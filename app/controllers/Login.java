@@ -21,7 +21,7 @@ public class Login extends Controller {
 
     }
 
-    public static Result login(){
+    public static Result authenticate() {
 
         Form<LoginForm> loginForm = form(LoginForm.class).bindFromRequest();
         LoginForm form = loginForm.get();
