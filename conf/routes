@@ -3,26 +3,30 @@
 # ~~~~
 
 # Home page
-GET         /                    controllers.Application.index()
+GET         /                     controllers.Application.index()
 
-GET         /add                 controllers.Application.renderAdd()
+GET         /index-logined        controllers.Application.renderIndexLogined()
 
-GET         /edit                controllers.Application.renderEdit()
+GET         /add                  controllers.Application.renderAdd()
 
-POST        /bars                controllers.Application.addBar()
+GET         /edit                 controllers.Application.renderEdit()
 
-GET         /login               controllers.Login.renderLogin()
+POST        /bars                 controllers.Application.addBar()
 
-POST        /login        controllers.Login.authenticate()
+GET         /login                controllers.Login.renderLogin()
 
-POST        /bars/edit           controllers.Application.editBar()
+POST        /login                controllers.Login.authenticate()
 
-GET         /bars/delete         controllers.Application.deleteAll()
+GET         /                     controllers.Login.logout()
+
+POST        /bars/edit            controllers.Application.editBar()
+
+GET         /bars/delete          controllers.Application.deleteAll()
 
 
 
-GET         /bars                controllers.Application.getBars()
+GET         /bars                 controllers.Application.getBars()
 
 
 # Map static resources from the /public folder to the /assets URL path
-GET         /assets/*file        controllers.Assets.at(path="/public", file)
+GET         /assets/*file         controllers.Assets.at(path="/public", file)

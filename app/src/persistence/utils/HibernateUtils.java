@@ -1,4 +1,4 @@
-package persistence.utils;
+package src.persistence.utils;
 
 
 import org.hibernate.SessionFactory;

@@ -1,30 +1,16 @@
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-import com.fasterxml.jackson.databind.JsonNode;
 import org.hibernate.Session;
-import org.junit.*;
+import org.junit.Assert;
+import org.junit.Test;
+import src.persistence.dao.UserDAO;
+import src.persistence.dao.impl.UserDAOImpl;
+import src.persistence.models.User;
+import src.persistence.utils.HibernateUtils;
+import src.service.UserService;
+import src.service.impl.UserServiceImpl;
 
-import persistence.dao.UserDAO;
-import persistence.dao.impl.UserDAOImpl;
-import persistence.models.User;
-import persistence.utils.HibernateUtils;
-import play.mvc.*;
-import play.test.*;
-import play.data.DynamicForm;
-import play.data.validation.ValidationError;
-import play.data.validation.Constraints.RequiredValidator;
-import play.i18n.Lang;
-import play.libs.F;
-import play.libs.F.*;
-import play.twirl.api.Content;
-import service.UserService;
-import service.impl.UserServiceImpl;
+import java.util.List;
 
-import static play.test.Helpers.*;
-import static org.fest.assertions.Assertions.*;
+import static org.fest.assertions.Assertions.assertThat;
 
 
 /**

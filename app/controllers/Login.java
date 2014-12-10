@@ -4,8 +4,9 @@ package controllers;
 import play.data.Form;
 import play.mvc.Controller;
 import play.mvc.Result;
-import service.UserService;
-import service.impl.UserServiceImpl;
+import src.service.UserService;
+import src.service.impl.UserServiceImpl;
+import views.html.index;
 import views.html.login;
 
 import static play.data.Form.form;
@@ -39,7 +40,7 @@ public class Login extends Controller {
             System.out.println("Login successful!");
             session().clear();
             session("email", form.email);
-            return redirect(routes.Application.index());
+            return redirect(routes.Application.renderIndexLogined());
         }
         else{
             System.out.println("Login ERROR!");
@@ -57,6 +58,12 @@ public class Login extends Controller {
 
     }
 
+
+    public static Result logout() {
+        session().clear();
+        flash("success", "You've been logged out");
+        return ok(index.render("index"));
+    }
     public static class LoginForm {
 
         public String email;

@@ -1,14 +1,11 @@
 package controllers;
 
-import persistence.models.Bar;
 import play.data.Form;
 import play.db.ebean.Model;
 import play.mvc.Controller;
 import play.mvc.Result;
-import views.html.add;
-import views.html.edit;
-import views.html.index;
-import views.html.viewAll;
+import src.persistence.models.Bar;
+import views.html.*;
 
 import java.util.List;
 
@@ -16,6 +13,14 @@ public class Application extends Controller {
 
     public static Result index() {
         return ok(index.render("Your new application is ready."));
+    }
+
+    public static Result renderIndexLogined() {
+        if (session().isEmpty()) {
+            return ok(index.render("index"));
+        } else {
+            return ok(indexLogined.render("Login successful"));
+        }
     }
 
     public static Result renderAdd() {

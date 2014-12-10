@@ -1,6 +1,6 @@
-package persistence.dao;
+package src.persistence.dao;
 
-import persistence.models.User;
+import src.persistence.models.User;
 
 import java.util.List;
 

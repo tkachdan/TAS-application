@@ -1,10 +1,10 @@
-package persistence.dao.impl;
+package src.persistence.dao.impl;
 
 import org.hibernate.Query;
 import org.hibernate.Session;
-import persistence.dao.UserDAO;
-import persistence.models.User;
-import persistence.utils.HibernateUtils;
+import src.persistence.dao.UserDAO;
+import src.persistence.models.User;
+import src.persistence.utils.HibernateUtils;
 
 import java.util.List;
 

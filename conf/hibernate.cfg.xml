@@ -6,10 +6,8 @@
 
     <session-factory>
         <property name="hibernate.dialect">org.hibernate.dialect.PostgreSQLDialect</property>
-        <property name="connection.url">jdbc:postgresql://127.0.0.1/tas</property>
+        <property name="connection.url">jdbc:postgresql://localhost:5432/tas</property>
         <property name="connection.driver_class">org.postgresql.Driver</property>
-        <property name="connection.username">postgres</property>
-        <property name="connection.password">test</property>
 
         <!-- DB schema will be updated if needed -->
         <!-- <property name="hbm2ddl.auto">update</property> -->
@@ -24,7 +22,8 @@
         <property name="show_sql">true</property>
 
 
-          <mapping class="persistence.models.User"/>
+        <mapping class="src.persistence.models.User"/>
+        <mapping class="src.persistence.models.Poi"/>
         <!--  <mapping class="model.SimpleEntity"/>-->
 
 

@@ -1,9 +1,9 @@
-package service.impl;
+package src.service.impl;
 
-import persistence.dao.UserDAO;
-import persistence.dao.impl.UserDAOImpl;
-import persistence.models.User;
-import service.UserService;
+import src.persistence.dao.UserDAO;
+import src.persistence.dao.impl.UserDAOImpl;
+import src.persistence.models.User;
+import src.service.UserService;
 
 /**
  * Created by tkachdan on 08-Dec-14.

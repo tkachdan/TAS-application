@@ -1,6 +1,4 @@
-package service;
-
-import persistence.models.User;
+package src.service;
 
 /**
  * Created by tkachdan on 08-Dec-14.

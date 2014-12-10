@@ -1,0 +1,49 @@
+@(message: String)
+
+@main("Index") {
+
+    <script src="http://maps.google.com/maps/api/js?key=AIzaSyB7zIjzjoOfTQBuGX2h110tUfoC0Wje430"></script>
+    <script src="@routes.Assets.at("js/loadMap.js")"></script>
+
+    <h1>You're logined!</h1>
+    <div class="btn-block">
+
+        <br>
+        <a class="button" href="@routes.Login.logout()">
+            <button type="button" class="btn btn-primary">Logout</button>
+        </a>
+
+        <br>
+
+        <br>
+
+
+    </div>
+
+    <!-- Map support goes here -->
+    <!-- logic goes in /js/loadMap.js
+
+    <div class="container" id="map-canvas">
+        <h1>Find path between places</h1>
+
+        <form role="form" action=" @routes.Application.editBar()
+    " method="post" id="input-form-edit">
+    <div class="form-group">
+        <label for="id">First place (Lat, Lon):</label>
+        <input type="text" class="form-control" name="id" id="id" disabled="disabled" placeholder="Not avaible for now">
+    </div>
+    <div class="form-group">
+        <label for="name">Second place (Lat, Lon)</label>
+        <input type="text" class="form-control" id="name" name="name" disabled="disabled" placeholder="Not avaible for now">
+    </div>
+    <button type="submit" class="btn btn-default" disabled="disabled">Submit</button>
+    </form>
+
+    <div id="mymap"></div>
+    <div id="directionsPanel" style="float : right ; width : 30 % ; height 100 %">
+        <p>Total Distance: <span id="total"></span></p>
+    </div>
+    -->
+}
+
+
