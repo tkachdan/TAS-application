@@ -18,6 +18,7 @@ public class Application extends Controller {
         return ok(index.render("Your new application is ready."));
     }
 
+    //TODO: can be put id to checkbox for future proceeding
     public static Result renderIndexLogined() {
         String str = "";
         if (session().isEmpty()) {
@@ -25,15 +26,22 @@ public class Application extends Controller {
         } else {
             PoiService poiService = new PoiServiceImpl();
             List<Poi> poiList = poiService.getAllPois();
+            int checkboxId = 0;
             for (Poi p : poiList) {
                 str += "<tr>";
-                str += " <td> <input type=\"checkbox\" name=\"myTextEditBox\" value=\"checked\" /> </td>";
+                str += " <td> <input type=\"checkbox\" id=" + checkboxId + " name=\"" + checkboxId + "\" value=\"checked\" /> </td>";
                 str += "<td>" + p.getId() + "</td> <td>" + p.getName() + "</td> <td>" + p.getType() + "</td> <td>"
                         + p.getCost() + "</td>";
                 str += "</tr>";
+                checkboxId++;
             }
             return ok(indexLogined.render(str));
         }
+    }
+
+    public static Result renderTrip() {
+
+        return ok(trip.render("trip"));
     }
 
     public static Result renderAdd() {
@@ -43,7 +51,6 @@ public class Application extends Controller {
     public static Result renderEdit() {
         return ok(edit.render());
     }
-
 
 
     public static Result addBar() {
@@ -72,10 +79,9 @@ public class Application extends Controller {
     }
 
 
-
-    public static Result deleteAll(){
+    public static Result deleteAll() {
         List<Bar> bars = new Model.Finder(String.class, Bar.class).all();
-        for(Bar b : bars) {
+        for (Bar b : bars) {
             b.delete();
         }
 
