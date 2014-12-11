@@ -25,7 +25,7 @@
         <mapping class="src.persistence.models.User"/>
         <mapping class="src.persistence.models.Poi"/>
         <mapping class="src.persistence.models.Trip"/>
-        <mapping resource="src/persistence/models/TripEntity.hbm.xml"/>
+        <!--<mapping resource="src/persistence/models/TripEntity.hbm.xml"/>-->
         <!--  <mapping class="model.SimpleEntity"/>-->
 
 

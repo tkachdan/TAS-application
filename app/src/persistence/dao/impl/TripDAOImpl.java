@@ -30,10 +30,14 @@ public class TripDAOImpl implements TripDAO {
                 .setInteger("tripID", id).uniqueResult();
 
         session.close();
+
         if (trip == (null))
             return null;
-        else
-            return trip;
+
+        if (trip.getPois().size() == 0)
+            trip.setPois(null);
+
+        return trip;
     }
 
     @Override

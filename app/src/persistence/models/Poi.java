@@ -14,7 +14,7 @@ public class Poi {
     private String name;
     private Double rating;
     private Time requiredTime;
-    private String type;
+    private PoiType type;
     private Integer cost;
     private Double latitude;
     private Double longtitude;
@@ -23,7 +23,7 @@ public class Poi {
     }
 
     public Poi(Boolean accesibility, Integer minimalAge, String name, Double rating,
-               Time requiredTime, String type, Integer cost,
+               Time requiredTime, PoiType type, Integer cost,
                Double latitude, Double longtitude) {
         this.accesibility = accesibility;
         this.minimalAge = minimalAge;
@@ -98,12 +98,13 @@ public class Poi {
     }
 
     @Basic
+    @Enumerated(EnumType.STRING)
     @Column(name = "type")
-    public String getType() {
+    public PoiType getType() {
         return type;
     }
 
-    public void setType(String type) {
+    public void setType(PoiType type) {
         this.type = type;
     }
 
@@ -140,7 +141,7 @@ public class Poi {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (!(o instanceof Poi)) return false;
 
         Poi poi = (Poi) o;
 
@@ -153,7 +154,7 @@ public class Poi {
         if (name != null ? !name.equals(poi.name) : poi.name != null) return false;
         if (rating != null ? !rating.equals(poi.rating) : poi.rating != null) return false;
         if (requiredTime != null ? !requiredTime.equals(poi.requiredTime) : poi.requiredTime != null) return false;
-        if (type != null ? !type.equals(poi.type) : poi.type != null) return false;
+        if (type != poi.type) return false;
 
         return true;
     }
@@ -171,5 +172,21 @@ public class Poi {
         result = 31 * result + (latitude != null ? latitude.hashCode() : 0);
         result = 31 * result + (longtitude != null ? longtitude.hashCode() : 0);
         return result;
+    }
+
+    @Override
+    public String toString() {
+        return "Poi{" +
+                "id=" + id +
+                ", accesibility=" + accesibility +
+                ", minimalAge=" + minimalAge +
+                ", name='" + name + '\'' +
+                ", rating=" + rating +
+                ", requiredTime=" + requiredTime +
+                ", type=" + type +
+                ", cost=" + cost +
+                ", latitude=" + latitude +
+                ", longtitude=" + longtitude +
+                '}';
     }
 }

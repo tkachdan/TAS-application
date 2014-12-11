@@ -1,6 +1,7 @@
 package src.persistence.dao;
 
 import src.persistence.models.Poi;
+import src.persistence.models.PoiType;
 
 import java.util.List;
 
@@ -12,9 +13,15 @@ public interface PoiDAO {
 
     public Poi getPoi(int id);
 
-    public List<Poi> getAllPois();
-
     public void updatePoi(Poi poi);
 
     public void deletePoi(int id);
+
+    public List<Poi> getAllPoisByCost(int maxCost);
+
+    public List<Poi> getAllPoisByRating(double minimalRating);
+
+    public List<Poi> getAllPoisByType(PoiType type);
+
+    public List<Poi> getAllPois();
 }

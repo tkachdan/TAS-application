@@ -14,17 +14,33 @@ public class Trip {
     private String name;
     private Integer cost;
     private Set<Poi> pois = new HashSet<Poi>();
+    private TripStatus tripStatus;
 
     public Trip() {
+    }
+
+    public Trip(String name, Integer cost) {
+        this.name = name;
+        this.cost = cost;
+        this.tripStatus = TripStatus.PENDING;
     }
 
     public Trip(String name, Integer cost, Set<Poi> pois) {
         this.name = name;
         this.cost = cost;
         this.pois = pois;
+        this.tripStatus = TripStatus.PENDING;
+    }
+
+    public Trip(String name, Integer cost, Set<Poi> pois, TripStatus tripStatus) {
+        this.name = name;
+        this.cost = cost;
+        this.pois = pois;
+        this.tripStatus = tripStatus;
     }
 
     @Id
+    @GeneratedValue
     @Column(name = "id", nullable = false, insertable = true, updatable = true)
     public int getId() {
         return id;
@@ -41,6 +57,20 @@ public class Trip {
 
     public void setPois(Set<Poi> pois) {
         this.pois = pois;
+    }
+
+    public void addPoi(Poi poi) {
+        this.pois.add(poi);
+    }
+
+    @Basic
+    @Column(name = "tripstatus", nullable = true, insertable = true, updatable = true, length = 255)
+    public TripStatus getTripStatus() {
+        return tripStatus;
+    }
+
+    public void setTripStatus(TripStatus tripStatus) {
+        this.tripStatus = tripStatus;
     }
 
     @Basic
@@ -74,6 +104,7 @@ public class Trip {
         if (cost != null ? !cost.equals(trip.cost) : trip.cost != null) return false;
         if (name != null ? !name.equals(trip.name) : trip.name != null) return false;
         if (pois != null ? !pois.equals(trip.pois) : trip.pois != null) return false;
+        if (tripStatus != trip.tripStatus) return false;
 
         return true;
     }
@@ -84,6 +115,18 @@ public class Trip {
         result = 31 * result + (name != null ? name.hashCode() : 0);
         result = 31 * result + (cost != null ? cost.hashCode() : 0);
         result = 31 * result + (pois != null ? pois.hashCode() : 0);
+        result = 31 * result + (tripStatus != null ? tripStatus.hashCode() : 0);
         return result;
+    }
+
+    @Override
+    public String toString() {
+        return "Trip{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", cost=" + cost +
+                ", pois=" + pois +
+                ", tripStatus=" + tripStatus +
+                '}';
     }
 }

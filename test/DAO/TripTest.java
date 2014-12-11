@@ -30,11 +30,30 @@ public class TripTest {
         Trip trip = new Trip("test", 0, null);
         tripDAO.saveTrip(trip);
 
-        Trip poiDb = (Trip) session
+        Trip tripDb = (Trip) session
                 .createQuery("from  Trip  trip where id = :tripID")
                 .setInteger("tripID", trip.getId()).uniqueResult();
 
-        assertThat(trip).isEqualTo(poiDb);
+        assertThat(trip.getId()).isEqualTo(tripDb.getId());
+        assertThat(trip.getName()).isEqualTo(tripDb.getName());
+    }
+
+    @Test
+    public void testUpdateTrip() {
+        clearDB();
+
+        Trip trip = new Trip("test", 0, null);
+        tripDAO.saveTrip(trip);
+
+        trip.setName("testUpdated");
+        tripDAO.updateTrip(trip);
+
+        Trip tripDb = (Trip) session
+                .createQuery("from  Trip  trip where id = :tripID")
+                .setInteger("tripID", trip.getId()).uniqueResult();
+
+        //System.out.println(tripDb.getName());
+        assertThat(trip.getName()).isEqualTo(tripDb.getName());
     }
 
     @Test
