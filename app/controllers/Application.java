@@ -1,8 +1,13 @@
 package controllers;
 
+import com.fasterxml.jackson.databind.JsonNode;
+import play.Logger;
 import play.data.Form;
+import play.libs.Json;
 import play.mvc.Controller;
 import play.mvc.Result;
+import src.persistence.dao.PoiDAO;
+import src.persistence.dao.impl.PoiDAOImpl;
 import src.persistence.models.Poi;
 import src.service.PoiService;
 import src.service.impl.PoiServiceImpl;
@@ -26,7 +31,7 @@ public class Application extends Controller {
         } else {
             PoiService poiService = new PoiServiceImpl();
             List<Poi> poiList = poiService.getAllPois();
-            int checkboxId = 0;
+            int checkboxId = 1;
             for (Poi p : poiList) {
                 str += "<tr>";
                 str += " <td> <input type=\"checkbox\" id=" + checkboxId + " name=\"" + checkboxId + "\" value=\"checked\" /> </td>";
@@ -41,16 +46,33 @@ public class Application extends Controller {
 
     public static Result renderTrip() {
         Map<String, String> data = Form.form().bindFromRequest().data();
-        List<Poi> pois = new ArrayList<>();
+        PoiDAO poiDAO = new PoiDAOImpl();
+
+        List<Poi> poiList = new ArrayList<>();
         for (Map.Entry<String, String> entry : data.entrySet()) {
+            //TODO: Redo with Service @Krasotin
+            int id = Integer.parseInt(entry.getKey());
+            Poi poi = poiDAO.getPoi(Integer.parseInt(entry.getKey()));
+            poiList.add(poi);
+            Logger.info(poi.getName());
+        }
+        String str = "";
+        List<Coordinates> coordList = new ArrayList<>();
+        for (Poi p : poiList) {
+            Coordinates c = new Coordinates();
+            c.lat = p.getLatitude();
+            c.lon = p.getLongtitude();
 
-            System.out.println(entry.getKey() + "/" + entry.getValue());
+            coordList.add(c);
 
+            str += "<tr>";
+            str += "<td>" + p.getId() + "</td> <td>" + p.getName() + "</td> <td>" + p.getType() + "</td> <td>"
+                    + p.getCost() + "</td>";
+            str += "</tr>";
         }
 
-        /*String str = Form.form().bindFromRequest().get("0");
-        System.out.println("DATA:" + str);*/
-        return ok(trip.render("trip"));
+        JsonNode json = Json.toJson(coordList);
+        return ok(trip.render(str, json));
     }
 
     public static Result renderAdd() {
@@ -61,6 +83,26 @@ public class Application extends Controller {
         return ok(edit.render());
     }
 
+    public static class Coordinates {
+        double lat;
+        double lon;
+
+        public double getLon() {
+            return lon;
+        }
+
+        public void setLon(double lon) {
+            this.lon = lon;
+        }
+
+        public double getLat() {
+            return lat;
+        }
+
+        public void setLat(double lat) {
+            this.lat = lat;
+        }
+    }
 
 
 }
