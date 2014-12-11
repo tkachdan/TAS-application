@@ -20,30 +20,37 @@
 
     <h2>Choose places you'd like to visit:</h2>
 
-    <div class="table-responsive">
-        <table class="table">
-            <thead>
-                <tr>
-                    <th>Id</th>
-                    <th>Name</th>
-                    <th>Type</th>
-                    <th>Cost</th>
-                </tr>
-            </thead>
-            <tbody>
-            @Html(message)
-            </tbody>
-        </table>
-    </div>
+    <form id="checkboxes-poi-form" action="@routes.Application.renderTrip()" method="get">
+        <div class="table-responsive">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th></th>
+                        <th>Id</th>
+                        <th>Name</th>
+                        <th>Type</th>
+                        <th>Cost</th>
+                    </tr>
+                </thead>
+                <tbody>
+                @Html(message)
+                </tbody>
+            </table>
+        </div>
+        <br>
+        <input type="submit" class="btn btn-primary">
+    </form>
+
+
 
     <!-- Map support goes here -->
     <!-- logic goes in /js/loadMap.js
 
     <div class="container" id="map-canvas">
         <h1>Find path between places</h1>
- @*
-        <form role="form" action=" @routes.Application.editBar()
-        " method="post" id="input-form-edit">*@
+
+         @*<form role="form" action=" @routes.Application.editBar()*@
+    " method="post" id="input-form-edit">
     <div class="form-group">
         <label for="id">First place (Lat, Lon):</label>
         <input type="text" class="form-control" name="id" id="id" disabled="disabled" placeholder="Not avaible for now">
@@ -60,6 +67,7 @@
         <p>Total Distance: <span id="total"></span></p>
     </div>
     -->
+
 }
 
 
