@@ -87,4 +87,9 @@ public class UserDAOImpl implements UserDAO {
         session.close();
         return users;
     }
+
+    public static String getDesignation(String email){
+        UserDAO userDAO=new UserDAOImpl();
+        return userDAO.getUserByEmail(email).getDesignation();
+    }
 }

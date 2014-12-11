@@ -6,6 +6,7 @@ import play.mvc.Controller;
 import play.mvc.Result;
 import src.service.UserService;
 import src.service.impl.UserServiceImpl;
+import src.persistence.dao.impl.UserDAOImpl;
 import views.html.index;
 import views.html.login;
 
@@ -36,11 +37,12 @@ public class Login extends Controller {
 
         UserService userService = new UserServiceImpl();
         boolean result = userService.login(email,password);
+
         if(result == true) {
             System.out.println("Login successful!");
             session().clear();
             session("email", form.email);   //Vytvoření a uložení potřebných dat do session (email bude nahrazen usernamem)
-            session().put("designation",userService.getDesignation(form.email));    //Designation je potřeba pro zobrazování tlačítek administrátora
+            session().put("designation",UserDAOImpl.getDesignation(form.email));    //Designation je potřeba pro zobrazování tlačítek administrátora
             return redirect(routes.Application.renderIndexLogined());
         }
         else{
