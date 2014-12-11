@@ -11,7 +11,7 @@ GET         /add                  controllers.Application.renderAdd()
 
 GET         /edit                 controllers.Application.renderEdit()
 
-POST        /bars                 controllers.Application.addBar()
+# POST        /bars                 controllers.Application.addBar()
 
 GET         /login                controllers.Login.renderLogin()
 
@@ -19,13 +19,11 @@ POST        /login                controllers.Login.authenticate()
 
 GET         /                     controllers.Login.logout()
 
-POST        /bars/edit            controllers.Application.editBar()
+# POST        /bars/edit            controllers.Application.editBar()
 
-GET         /bars/delete          controllers.Application.deleteAll()
+# GET         /bars/delete          controllers.Application.deleteAll()
 
-
-
-GET         /bars                 controllers.Application.getBars()
+# GET         /bars                 controllers.Application.getBars()
 
 
 # Map static resources from the /public folder to the /assets URL path

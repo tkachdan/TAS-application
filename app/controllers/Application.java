@@ -1,14 +1,14 @@
 package controllers;
 
-import play.data.Form;
-import play.db.ebean.Model;
 import play.mvc.Controller;
 import play.mvc.Result;
-import src.persistence.models.Bar;
 import src.persistence.models.Poi;
 import src.service.PoiService;
 import src.service.impl.PoiServiceImpl;
-import views.html.*;
+import views.html.add;
+import views.html.edit;
+import views.html.index;
+import views.html.indexLogined;
 
 import java.util.List;
 
@@ -46,8 +46,7 @@ public class Application extends Controller {
 
 
 
-    public static Result addBar() {
-
+/*    public static Result addBar() {
         Bar bar = Form.form(Bar.class).bindFromRequest().get();
         bar.save();
         //System.out.println("NOOO");
@@ -71,8 +70,6 @@ public class Application extends Controller {
 
     }
 
-
-
     public static Result deleteAll(){
         List<Bar> bars = new Model.Finder(String.class, Bar.class).all();
         for(Bar b : bars) {
@@ -81,7 +78,6 @@ public class Application extends Controller {
 
         return redirect(routes.Application.index());
     }
-
 
     public static Result editBar() {
         System.out.println("YEE");
@@ -95,6 +91,6 @@ public class Application extends Controller {
         return redirect(routes.Application.index());
 
 
-    }
+    }*/
 
 }

@@ -19,6 +19,23 @@ public class Poi {
     private Double latitude;
     private Double longtitude;
 
+    public Poi() {
+    }
+
+    public Poi(Boolean accesibility, Integer minimalAge, String name, Double rating,
+               Time requiredTime, String type, Integer cost,
+               Double latitude, Double longtitude) {
+        this.accesibility = accesibility;
+        this.minimalAge = minimalAge;
+        this.name = name;
+        this.rating = rating;
+        this.requiredTime = requiredTime;
+        this.type = type;
+        this.cost = cost;
+        this.latitude = latitude;
+        this.longtitude = longtitude;
+    }
+
     @Id
     @GeneratedValue
     @Column(name = "id")

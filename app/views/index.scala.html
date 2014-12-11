@@ -7,9 +7,9 @@
     <script src="@routes.Assets.at("js/loadMap.js")"></script>
 
     <div class="btn-block">
-        <a class="button" href="@routes.Application.getBars()">
+        @*<a class="button" href="@routes.Application.getBars()">
             <button type="button" class="btn btn-primary" >View all</button>
-        </a>
+        </a>*@
 
 
         <br>
@@ -31,9 +31,9 @@
 
         <br>
 
-        <a href="@routes.Application.deleteAll()">
+        @*<a href="@routes.Application.deleteAll()">
             <button type="button" class="btn btn-primary">Delete all</button>
-        </a>
+        </a>*@
 
 
         <br>
@@ -47,7 +47,7 @@
     <div class="container" id="map-canvas">
         <h1>Find path between places</h1>
 
-        <form role="form" action="@routes.Application.editBar()" method="post" id="input-form-edit">
+        @*<form role="form" action="@routes.Application.editBar()" method="post" id="input-form-edit">
             <div class="form-group">
                 <label for="id">First place (Lat, Lon):</label>
                 <input type="text" class="form-control" name="id" id="id" disabled="disabled" placeholder="Not avaible for now">
@@ -57,7 +57,7 @@
                 <input type="text" class="form-control" id="name" name="name" disabled="disabled" placeholder="Not avaible for now">
             </div>
             <button type="submit" class="btn btn-default" disabled="disabled">Submit</button>
-        </form>
+        </form>*@
 
         <div id="mymap"></div>
         <div id="directionsPanel" style="float : right ; width : 30 % ; height 100 %">

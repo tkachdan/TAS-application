@@ -14,11 +14,9 @@
         <!-- DB schema will be updated if needed -->
         <!-- <property name="hbm2ddl.auto">update</property> -->
 
-
         <property name="connection_pool_size">1</property>
 
         <!-- <property name="hbm2ddl.auto">create</property>-->
-
         <property name="hibernate.hbm2ddl.auto">update</property>
 
         <property name="show_sql">true</property>
@@ -26,6 +24,8 @@
 
         <mapping class="src.persistence.models.User"/>
         <mapping class="src.persistence.models.Poi"/>
+        <mapping class="src.persistence.models.Trip"/>
+        <mapping resource="src/persistence/models/TripEntity.hbm.xml"/>
         <!--  <mapping class="model.SimpleEntity"/>-->
 
 
