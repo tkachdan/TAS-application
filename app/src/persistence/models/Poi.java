@@ -1,9 +1,6 @@
 package src.persistence.models;
 
-import javax.persistence.Basic;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.sql.Time;
 
 /**
@@ -23,6 +20,7 @@ public class Poi {
     private Double longtitude;
 
     @Id
+    @GeneratedValue
     @Column(name = "id")
     public int getId() {
         return id;
