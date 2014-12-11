@@ -5,8 +5,6 @@ import src.persistence.dao.UserDAO;
 import src.persistence.dao.impl.UserDAOImpl;
 import src.persistence.models.User;
 import src.persistence.utils.HibernateUtils;
-import src.service.UserService;
-import src.service.impl.UserServiceImpl;
 
 import java.util.List;
 
@@ -23,7 +21,28 @@ public class ApplicationTest {
    public static Session session = new HibernateUtils().getSessionFactory().openSession();
     static UserDAO userDAO = new UserDAOImpl();
 
+
     @Test
+    public void simpleCheck() {
+        int a = 1 + 1;
+        assertThat(a).isEqualTo(2);
+    }
+
+    @Test
+    public void daoTest() {
+        User user = new User("test", "simple", "firstname", "lastname", "pass", "username");
+        userDAO.saveUser(user);
+
+        List userResults = session.createQuery("from User ").list();
+
+        User userRes = (User) userResults.get(userResults.size() - 1);
+
+        Assert.assertEquals(user.getFirstName(), userRes.getFirstName());
+
+    }
+
+
+   /* @Test
     public void simpleCheck() {
         int a = 1 + 1;
         assertThat(a).isEqualTo(2);
@@ -68,7 +87,7 @@ public class ApplicationTest {
         System.out.println(result);
         Assert.assertEquals(result,true);
 
-    }
+    }*/
 
 
 
