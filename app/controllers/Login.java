@@ -1,5 +1,6 @@
 package controllers;
 
+
 import play.data.Form;
 import play.mvc.Controller;
 import play.mvc.Result;
@@ -38,7 +39,8 @@ public class Login extends Controller {
         if(result == true) {
             System.out.println("Login successful!");
             session().clear();
-            session("email", form.email);
+            session("email", form.email);   //Vytvoření a uložení potřebných dat do session (email bude nahrazen usernamem)
+            session().put("designation",userService.getDesignation(form.email));    //Designation je potřeba pro zobrazování tlačítek administrátora
             return redirect(routes.Application.renderIndexLogined());
         }
         else{
@@ -60,7 +62,7 @@ public class Login extends Controller {
 
     public static Result logout() {
         session().clear();
-        flash("success", "You've been logged out");
+        System.out.println("User has been logged out");
         return ok(index.render("index"));
     }
     public static class LoginForm {
@@ -69,4 +71,5 @@ public class Login extends Controller {
         public String password;
 
     }
+
 }
