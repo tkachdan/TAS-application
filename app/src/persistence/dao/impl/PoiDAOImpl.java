@@ -26,7 +26,7 @@ public class PoiDAOImpl implements PoiDAO {
     @Override
     public List<Poi> getAllPois() {
         session.beginTransaction();
-        List pois = session.createQuery("FROM User ").list();
+        List pois = session.createQuery("FROM Poi ").list();
 
         return pois;
     }

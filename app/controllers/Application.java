@@ -5,6 +5,9 @@ import play.db.ebean.Model;
 import play.mvc.Controller;
 import play.mvc.Result;
 import src.persistence.models.Bar;
+import src.persistence.models.Poi;
+import src.service.PoiService;
+import src.service.impl.PoiServiceImpl;
 import views.html.*;
 
 import java.util.List;
@@ -16,10 +19,20 @@ public class Application extends Controller {
     }
 
     public static Result renderIndexLogined() {
+        String str = "";
         if (session().isEmpty()) {
             return ok(index.render("index"));
         } else {
-            return ok(indexLogined.render("Login successful"));
+            PoiService poiService = new PoiServiceImpl();
+            List<Poi> poiList = poiService.getAllPois();
+            for (Poi p : poiList) {
+                str += "<tr>";
+                str += " <td> <input type=\"checkbox\" name=\"myTextEditBox\" value=\"checked\" /> </td>";
+                str += "<td>" + p.getId() + "</td> <td>" + p.getName() + "</td> <td>" + p.getType() + "</td> <td>"
+                        + p.getCost() + "</td>";
+                str += "</tr>";
+            }
+            return ok(indexLogined.render(str));
         }
     }
 
