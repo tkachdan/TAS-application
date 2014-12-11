@@ -10,7 +10,9 @@ import src.service.PoiService;
 import src.service.impl.PoiServiceImpl;
 import views.html.*;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 public class Application extends Controller {
 
@@ -40,7 +42,16 @@ public class Application extends Controller {
     }
 
     public static Result renderTrip() {
+        Map<String, String> data = Form.form().bindFromRequest().data();
+        List<Poi> pois = new ArrayList<>();
+        for (Map.Entry<String, String> entry : data.entrySet()) {
 
+            System.out.println(entry.getKey() + "/" + entry.getValue());
+
+        }
+
+        /*String str = Form.form().bindFromRequest().get("0");
+        System.out.println("DATA:" + str);*/
         return ok(trip.render("trip"));
     }
 
@@ -102,5 +113,6 @@ public class Application extends Controller {
 
 
     }
+
 
 }

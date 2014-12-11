@@ -23,8 +23,7 @@ POST        /bars/edit            controllers.Application.editBar()
 
 GET         /bars/delete          controllers.Application.deleteAll()
 
-GET        /trip/        controllers.Application.renderTrip()
-
+GET        /trip        controllers.Application.renderTrip()
 
 
 GET         /bars                 controllers.Application.getBars()
