@@ -1,6 +1,7 @@
 @(message: String)
 
 
+
     @main("Index") {
         <div class="jumbotron">
             <h2>Welcome to TAS application!</h2>
@@ -12,10 +13,16 @@
 
 
             <br>
-            <a class="button" href="@routes.Login.renderLogin()">
+            <a class="button" style="display:@Buttons.loginButton()" href="@routes.Login.renderLogin()">
                 <button type="button" class="btn btn-primary">Login</button>
             </a>
+            <a class="button" style="display:@Buttons.logoutButton()" href="@routes.Login.logout()">
+                <button type="button" class="btn btn-primary">Logout</button>
+            </a>
 
+            <a class="button" style="display:@Buttons.logoutButton()" href="/index-logined">
+                <button type="button" class="btn btn-primary">Trip creating</button>
+            </a>
             <br>
 
 
