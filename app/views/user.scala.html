@@ -1,0 +1,48 @@
+@(form: Form[UserControler.UserForm])
+
+
+@main("authenticate") {
+
+    <h1>User edit</h1>
+    <br>
+
+    <label style="display:@UserControler.getButErr()">@UserControler.getErr()</label>
+    <form role="form" action="@routes.UserControler.editUser()" method="post" id="input-form-edit">
+        <div class="form-group">
+            <label for="name">Id:</label>
+            <input type="text" class="form-control" name="id" id="id" value="@UserControler.getUF.id">
+        </div>
+        <div class="form-group">
+            <label for="name">Email:</label>
+            <input type="text" class="form-control" name="email" id="email" value="@UserControler.getUF.email">
+        </div>
+        <div class="form-group">
+            <label for="name">Password:</label>
+            <input type="password" class="form-control" id="password" name="password" value="@UserControler.getUF.password">
+        </div>
+        <div class="form-group">
+            <label for="name">Username:</label>
+            <input type="text" class="form-control" id="username" name="username" value="@UserControler.getUF.username">
+        </div>
+        <div class="form-group">
+            <label for="name">First name:</label>
+            <input type="text" class="form-control" id="firstname" name="firstname" value="@UserControler.getUF.firstname">
+        </div>
+        <div class="form-group">
+            <label for="name">Last name:</label>
+            <input type="text" class="form-control" id="lastname" name="lastname" value="@UserControler.getUF.lastname">
+        </div>
+        <div class="form-group">
+            <label for="name">Designation:</label>
+            <select class="form-control" id="designation" name="designation">
+                <option value="Administrator" @UserControler.getUF.getSelDesignation("Administrator")>Administrator</option>
+                <option value="Tourist" @UserControler.getUF.getSelDesignation("Tourist")>Tourist</option>
+            </select>
+        </div>
+        <button type="submit" id="but" name="but" value="Add" class="btn btn-primary">Add</button>
+        <button type="submit" id="but" name="but" value="Upd" class="btn btn-primary">Update</button>
+        <button type="submit" id="but" name="but" value="Del" class="btn btn-primary">Delete</button>
+        <button type="submit" id="but" name="but" value="Get" class="btn btn-primary">Get by id</button>
+    </form>
+}
+

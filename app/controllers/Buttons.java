@@ -9,17 +9,17 @@ public class Buttons extends Controller{
 
     public static String loginButton(){
         if(session().isDirty){
-            return "block";
-        }else{
             return "none";
+        }else{
+            return "block";
         }
     }
 
     public static String logoutButton(){
         if(session().isDirty){
-            return "none";
-        }else{
             return "block";
+        }else{
+            return "none";
         }
     }
 
