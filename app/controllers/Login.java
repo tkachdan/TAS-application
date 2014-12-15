@@ -9,6 +9,7 @@ import src.service.impl.UserServiceImpl;
 import src.persistence.dao.impl.UserDAOImpl;
 import views.html.index;
 import views.html.login;
+import views.html.logout;
 
 import static play.data.Form.form;
 
@@ -65,7 +66,7 @@ public class Login extends Controller {
     public static Result logout() {
         session().clear();
         System.out.println("User has been logged out");
-        return ok(index.render("index"));
+        return ok(logout.render("index"));
     }
     public static class LoginForm {
 

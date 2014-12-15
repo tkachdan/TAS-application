@@ -2,8 +2,10 @@
 
 
 @main("authenticate") {
-
+    <meta http-equiv="@Buttons.redirect()" content="0;URL=login">
+    <meta http-equiv="@Buttons.redirectAdmin()" content="0;URL=index-logined">
     <h1>User edit</h1>
+
     <br>
 
     <label style="display:@UserControler.getButErr()">@UserControler.getErr()</label>

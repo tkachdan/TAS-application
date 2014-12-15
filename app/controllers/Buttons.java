@@ -30,4 +30,24 @@ public class Buttons extends Controller{
             return "none";
         }
     }
+
+    public static String redirect(){
+        if(!session().isEmpty()){
+            return "";
+        }else{
+            return "refresh";
+        }
+    }
+
+    public static String redirectAdmin(){
+        if(session()==null || session().get("designation").equals("Administrator")){
+            return "";
+        }else{
+            return "refresh";
+        }
+    }
+
+    public static String email(){
+        return session().get("email");
+    }
 }
