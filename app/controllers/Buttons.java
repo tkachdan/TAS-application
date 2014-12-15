@@ -8,7 +8,7 @@ import play.mvc.Controller;
 public class Buttons extends Controller{
 
     public static String loginButton(){
-        if(session().isDirty){
+        if(!session().isEmpty()){
             return "none";
         }else{
             return "block";
@@ -16,7 +16,7 @@ public class Buttons extends Controller{
     }
 
     public static String logoutButton(){
-        if(session().isDirty){
+        if(!session().isEmpty()){
             return "block";
         }else{
             return "none";
