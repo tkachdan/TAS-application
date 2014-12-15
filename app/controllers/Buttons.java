@@ -39,6 +39,14 @@ public class Buttons extends Controller{
         }
     }
 
+    public static String redirectLogin(){
+        if(session().isEmpty()){
+            return "";
+        }else{
+            return "refresh";
+        }
+    }
+
     public static String redirectAdmin(){
         if(session()==null || session().get("designation").equals("Administrator")){
             return "";
