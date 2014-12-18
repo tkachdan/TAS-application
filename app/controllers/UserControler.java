@@ -18,12 +18,24 @@ public class UserControler extends Controller{
     public static UserForm mem=new UserForm();
 
     public static Result renderUser(){
+        if(session().isEmpty()){
+            return controllers.Login.renderLogin();
+        }
+        if(!session().get("designation").equals("Administrator")){
+            return Application.renderIndexLogined();
+        }
         err="";
         return ok(user.render(form(UserForm.class)));
 
     }
 
     public static Result editUser(){
+        if(session().isEmpty()){
+            return controllers.Login.renderLogin();
+        }
+        if(!session().get("designation").equals("Administrator")){
+            return Application.renderIndexLogined();
+        }
         Form<UserForm> userForm = form(UserForm.class).bindFromRequest();
         UserForm form = userForm.get();
         mem.clean();

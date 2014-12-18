@@ -19,7 +19,9 @@ import static play.data.Form.form;
 public class Login extends Controller {
 
     public static Result renderLogin(){
-
+        if (!session().isEmpty()){
+            return Login.logout();
+        }
         return ok(login.render(form(LoginForm.class)));
 
     }
