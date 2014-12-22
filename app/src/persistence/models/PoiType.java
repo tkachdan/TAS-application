@@ -5,5 +5,8 @@ package src.persistence.models;
  */
 public enum PoiType {
     HISTORY,
-    CULTURE
+    CULTURE,
+    ART,
+    TECHNIC,
+    EDUCATION
 }
