@@ -12,6 +12,7 @@ import java.util.List;
  * Created by tkachdan on 08-Dec-14.
  */
 public class UserDAOImpl implements UserDAO {
+
     @Override
     public void saveUser(User user) {
         Session session = new HibernateUtils().getSessionFactory().openSession();
@@ -32,18 +33,20 @@ public class UserDAOImpl implements UserDAO {
 
         session.close();
         //session.getTransaction().commit();
-        if (user == (null))
+        if (user == (null)) {
             return null;
-        else
+        } else {
             return user;
+        }
     }
 
     @Override
     public User getUserByEmail(String email) {
         Session session = new HibernateUtils().getSessionFactory().openSession();
 
-        if (!session.isOpen())
+        if (!session.isOpen()) {
             session.beginTransaction();
+        }
         User user = null;
 
         Query query = session.createQuery("FROM User u WHERE u.email = :emailParam");
@@ -88,8 +91,8 @@ public class UserDAOImpl implements UserDAO {
         return users;
     }
 
-    public static String getDesignation(String email){
-        UserDAO userDAO=new UserDAOImpl();
+    public static String getDesignation(String email) {
+        UserDAO userDAO = new UserDAOImpl();
         return userDAO.getUserByEmail(email).getDesignation();
     }
 }

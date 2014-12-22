@@ -9,6 +9,7 @@ import java.util.List;
  * Created by tkachdan on 11-Dec-14.
  */
 public interface PoiDAO {
+
     public void savePoi(Poi poi);
 
     public Poi getPoi(int id);

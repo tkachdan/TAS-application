@@ -1,6 +1,5 @@
 package src.persistence.utils;
 
-
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 
@@ -10,6 +9,7 @@ import org.hibernate.cfg.Configuration;
  * get configured SessionFactory
  */
 public class HibernateUtils {
+
     private SessionFactory ourSessionFactory;
 
     public SessionFactory getSessionFactory() {

@@ -5,57 +5,57 @@ import play.mvc.Controller;
 /**
  * Created by Pauer on 11. 12. 2014.
  */
-public class Buttons extends Controller{
+public class Buttons extends Controller {
 
-    public static String loginButton(){
-        if(!session().isEmpty()){
+    public static String loginButton() {
+        if (!session().isEmpty()) {
             return "none";
-        }else{
+        } else {
             return "block";
         }
     }
 
-    public static String logoutButton(){
-        if(!session().isEmpty()){
+    public static String logoutButton() {
+        if (!session().isEmpty()) {
             return "block";
-        }else{
+        } else {
             return "none";
         }
     }
 
-    public static String adminButton(){
-        if(session().get("designation").equals("Administrator")){
+    public static String adminButton() {
+        if (session().get("designation").equals("Administrator")) {
             return "block";
-        }else{
+        } else {
             return "none";
         }
     }
 
-    public static String redirect(){
-        if(!session().isEmpty()){
+    public static String redirect() {
+        if (!session().isEmpty()) {
             return "";
-        }else{
+        } else {
             return "refresh";
         }
     }
 
-    public static String redirectLogin(){
-        if(session().isEmpty()){
+    public static String redirectLogin() {
+        if (session().isEmpty()) {
             return "";
-        }else{
+        } else {
             return "refresh";
         }
     }
 
-    public static String redirectAdmin(){
-        if(session()==null || session().get("designation").equals("Administrator")){
+    public static String redirectAdmin() {
+        if (session() == null || session().get("designation").equals("Administrator")) {
             return "";
-        }else{
+        } else {
             return "refresh";
         }
     }
 
-    public static String email(){
+    public static String email() {
         return session().get("email");
     }
 }

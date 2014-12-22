@@ -10,6 +10,7 @@ import java.util.Set;
 @Entity
 @Table(name = "trip", schema = "public", catalog = "tas")
 public class Trip {
+
     private int id;
     private String name;
     private Integer cost;
@@ -95,16 +96,30 @@ public class Trip {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof Trip)) return false;
+        if (this == o) {
+            return true;
+        }
+        if (!(o instanceof Trip)) {
+            return false;
+        }
 
         Trip trip = (Trip) o;
 
-        if (id != trip.id) return false;
-        if (cost != null ? !cost.equals(trip.cost) : trip.cost != null) return false;
-        if (name != null ? !name.equals(trip.name) : trip.name != null) return false;
-        if (pois != null ? !pois.equals(trip.pois) : trip.pois != null) return false;
-        if (tripStatus != trip.tripStatus) return false;
+        if (id != trip.id) {
+            return false;
+        }
+        if (cost != null ? !cost.equals(trip.cost) : trip.cost != null) {
+            return false;
+        }
+        if (name != null ? !name.equals(trip.name) : trip.name != null) {
+            return false;
+        }
+        if (pois != null ? !pois.equals(trip.pois) : trip.pois != null) {
+            return false;
+        }
+        if (tripStatus != trip.tripStatus) {
+            return false;
+        }
 
         return true;
     }
@@ -121,12 +136,12 @@ public class Trip {
 
     @Override
     public String toString() {
-        return "Trip{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", cost=" + cost +
-                ", pois=" + pois +
-                ", tripStatus=" + tripStatus +
-                '}';
+        return "Trip{"
+                + "id=" + id
+                + ", name='" + name + '\''
+                + ", cost=" + cost
+                + ", pois=" + pois
+                + ", tripStatus=" + tripStatus
+                + '}';
     }
 }

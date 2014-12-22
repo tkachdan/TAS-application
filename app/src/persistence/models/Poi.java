@@ -8,6 +8,7 @@ import java.sql.Time;
  */
 @Entity
 public class Poi {
+
     private int id;
     private Boolean accesibility;
     private Integer minimalAge;
@@ -23,8 +24,8 @@ public class Poi {
     }
 
     public Poi(Boolean accesibility, Integer minimalAge, String name, Double rating,
-               Time requiredTime, PoiType type, Integer cost,
-               Double latitude, Double longtitude) {
+            Time requiredTime, PoiType type, Integer cost,
+            Double latitude, Double longtitude) {
         this.accesibility = accesibility;
         this.minimalAge = minimalAge;
         this.name = name;
@@ -140,21 +141,45 @@ public class Poi {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof Poi)) return false;
+        if (this == o) {
+            return true;
+        }
+        if (!(o instanceof Poi)) {
+            return false;
+        }
 
         Poi poi = (Poi) o;
 
-        if (id != poi.id) return false;
-        if (accesibility != null ? !accesibility.equals(poi.accesibility) : poi.accesibility != null) return false;
-        if (cost != null ? !cost.equals(poi.cost) : poi.cost != null) return false;
-        if (latitude != null ? !latitude.equals(poi.latitude) : poi.latitude != null) return false;
-        if (longtitude != null ? !longtitude.equals(poi.longtitude) : poi.longtitude != null) return false;
-        if (minimalAge != null ? !minimalAge.equals(poi.minimalAge) : poi.minimalAge != null) return false;
-        if (name != null ? !name.equals(poi.name) : poi.name != null) return false;
-        if (rating != null ? !rating.equals(poi.rating) : poi.rating != null) return false;
-        if (requiredTime != null ? !requiredTime.equals(poi.requiredTime) : poi.requiredTime != null) return false;
-        if (type != poi.type) return false;
+        if (id != poi.id) {
+            return false;
+        }
+        if (accesibility != null ? !accesibility.equals(poi.accesibility) : poi.accesibility != null) {
+            return false;
+        }
+        if (cost != null ? !cost.equals(poi.cost) : poi.cost != null) {
+            return false;
+        }
+        if (latitude != null ? !latitude.equals(poi.latitude) : poi.latitude != null) {
+            return false;
+        }
+        if (longtitude != null ? !longtitude.equals(poi.longtitude) : poi.longtitude != null) {
+            return false;
+        }
+        if (minimalAge != null ? !minimalAge.equals(poi.minimalAge) : poi.minimalAge != null) {
+            return false;
+        }
+        if (name != null ? !name.equals(poi.name) : poi.name != null) {
+            return false;
+        }
+        if (rating != null ? !rating.equals(poi.rating) : poi.rating != null) {
+            return false;
+        }
+        if (requiredTime != null ? !requiredTime.equals(poi.requiredTime) : poi.requiredTime != null) {
+            return false;
+        }
+        if (type != poi.type) {
+            return false;
+        }
 
         return true;
     }
@@ -176,17 +201,17 @@ public class Poi {
 
     @Override
     public String toString() {
-        return "Poi{" +
-                "id=" + id +
-                ", accesibility=" + accesibility +
-                ", minimalAge=" + minimalAge +
-                ", name='" + name + '\'' +
-                ", rating=" + rating +
-                ", requiredTime=" + requiredTime +
-                ", type=" + type +
-                ", cost=" + cost +
-                ", latitude=" + latitude +
-                ", longtitude=" + longtitude +
-                '}';
+        return "Poi{"
+                + "id=" + id
+                + ", accesibility=" + accesibility
+                + ", minimalAge=" + minimalAge
+                + ", name='" + name + '\''
+                + ", rating=" + rating
+                + ", requiredTime=" + requiredTime
+                + ", type=" + type
+                + ", cost=" + cost
+                + ", latitude=" + latitude
+                + ", longtitude=" + longtitude
+                + '}';
     }
 }

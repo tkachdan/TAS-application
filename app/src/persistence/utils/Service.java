@@ -11,6 +11,7 @@ import org.hibernate.service.ServiceRegistryBuilder;
  * Created by Krasotin on 11.12.14.
  */
 public class Service {
+
     private static final SessionFactory ourSessionFactory;
     private static final ServiceRegistry serviceRegistry;
 
@@ -29,6 +30,5 @@ public class Service {
     public static Session getSession() throws HibernateException {
         return ourSessionFactory.openSession();
     }
-
 
 }

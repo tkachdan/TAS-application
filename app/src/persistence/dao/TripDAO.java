@@ -8,6 +8,7 @@ import java.util.List;
  * Created by Krasotin on 11.12.14.
  */
 public interface TripDAO {
+
     public void saveTrip(Trip trip);
 
     public Trip getTrip(int id);

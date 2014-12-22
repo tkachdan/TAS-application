@@ -3,12 +3,12 @@ package src.persistence.models;
 import javax.persistence.*;
 
 /**
- * Class representing user.
- * Created by Daria on 05-Dec-14.
+ * Class representing user. Created by Daria on 05-Dec-14.
  */
 @Entity
 @Table(name = "user", schema = "public", catalog = "tas")
 public class User {
+
     private int userId;
     private String designation;
     private String email;
@@ -21,8 +21,8 @@ public class User {
     }
 
     public User(String designation, String email,
-                String firstName, String lastName,
-                String password, String username) {
+            String firstName, String lastName,
+            String password, String username) {
         this.designation = designation;
         this.email = email;
         this.firstName = firstName;
@@ -42,7 +42,6 @@ public class User {
         this.userId = userId;
     }
 
-
     @Column(name = "designation")
     public String getDesignation() {
         return designation;
@@ -51,7 +50,6 @@ public class User {
     public void setDesignation(String designation) {
         this.designation = designation;
     }
-
 
     @Column(name = "email", unique = true)
     public String getEmail() {
@@ -62,7 +60,6 @@ public class User {
         this.email = email;
     }
 
-
     @Column(name = "first_name")
     public String getFirstName() {
         return firstName;
@@ -71,7 +68,6 @@ public class User {
     public void setFirstName(String firstName) {
         this.firstName = firstName;
     }
-
 
     @Column(name = "last_name")
     public String getLastName() {
@@ -82,7 +78,6 @@ public class User {
         this.lastName = lastName;
     }
 
-
     @Column(name = "password")
     public String getPassword() {
         return password;
@@ -91,7 +86,6 @@ public class User {
     public void setPassword(String password) {
         this.password = password;
     }
-
 
     @Column(name = "username")
     public String getUsername() {
@@ -104,18 +98,36 @@ public class User {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof User)) return false;
+        if (this == o) {
+            return true;
+        }
+        if (!(o instanceof User)) {
+            return false;
+        }
 
         User user = (User) o;
 
-        if (userId != user.userId) return false;
-        if (designation != null ? !designation.equals(user.designation) : user.designation != null) return false;
-        if (email != null ? !email.equals(user.email) : user.email != null) return false;
-        if (firstName != null ? !firstName.equals(user.firstName) : user.firstName != null) return false;
-        if (lastName != null ? !lastName.equals(user.lastName) : user.lastName != null) return false;
-        if (password != null ? !password.equals(user.password) : user.password != null) return false;
-        if (username != null ? !username.equals(user.username) : user.username != null) return false;
+        if (userId != user.userId) {
+            return false;
+        }
+        if (designation != null ? !designation.equals(user.designation) : user.designation != null) {
+            return false;
+        }
+        if (email != null ? !email.equals(user.email) : user.email != null) {
+            return false;
+        }
+        if (firstName != null ? !firstName.equals(user.firstName) : user.firstName != null) {
+            return false;
+        }
+        if (lastName != null ? !lastName.equals(user.lastName) : user.lastName != null) {
+            return false;
+        }
+        if (password != null ? !password.equals(user.password) : user.password != null) {
+            return false;
+        }
+        if (username != null ? !username.equals(user.username) : user.username != null) {
+            return false;
+        }
 
         return true;
     }
@@ -134,14 +146,14 @@ public class User {
 
     @Override
     public String toString() {
-        return "User{" +
-                "userId=" + userId +
-                ", designation='" + designation + '\'' +
-                ", email='" + email + '\'' +
-                ", firstName='" + firstName + '\'' +
-                ", lastName='" + lastName + '\'' +
-                ", password='" + password + '\'' +
-                ", username='" + username + '\'' +
-                '}';
+        return "User{"
+                + "userId=" + userId
+                + ", designation='" + designation + '\''
+                + ", email='" + email + '\''
+                + ", firstName='" + firstName + '\''
+                + ", lastName='" + lastName + '\''
+                + ", password='" + password + '\''
+                + ", username='" + username + '\''
+                + '}';
     }
 }

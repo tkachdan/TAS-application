@@ -34,10 +34,11 @@ public class PoiDAOImpl implements PoiDAO {
                 .setInteger("poiID", id).uniqueResult();
 
         session.close();
-        if (poi == (null))
+        if (poi == (null)) {
             return null;
-        else
+        } else {
             return poi;
+        }
     }
 
     @Override
@@ -62,7 +63,7 @@ public class PoiDAOImpl implements PoiDAO {
 
     @Override
     public List<Poi> getAllPoisByCost(int maxCost) {
-         /*Query query = session.createQuery("SELECT r FROM Team t JOIN t.teamMembers r WHERE t.id = :teamIdParam");*/
+        /*Query query = session.createQuery("SELECT r FROM Team t JOIN t.teamMembers r WHERE t.id = :teamIdParam");*/
 
         Session session = new HibernateUtils().getSessionFactory().openSession();
         session.beginTransaction();

@@ -12,6 +12,7 @@ import src.service.TripService;
  * Created by Krasotin on 11.12.14.
  */
 public class TripServiceImpl implements TripService {
+
     static UserDAOImpl userDAO = new UserDAOImpl();
     static PoiDAOImpl poiDAO = new PoiDAOImpl();
     static TripDAOImpl tripDAO = new TripDAOImpl();
@@ -21,15 +22,17 @@ public class TripServiceImpl implements TripService {
         Trip tripDb = tripDAO.getTrip(trip.getId());
         Poi poiDb = poiDAO.getPoi(poi.getId());
 
-        if (poiDb == null)
+        if (poiDb == null) {
             poiDAO.savePoi(poi);
-        else
+        } else {
             poi = poiDb;
+        }
 
-        if (tripDb == null)
+        if (tripDb == null) {
             tripDAO.saveTrip(trip);
-        else
+        } else {
             trip = tripDb;
+        }
 
         trip.addPoi(poi);
         tripDAO.updateTrip(trip);
@@ -41,10 +44,11 @@ public class TripServiceImpl implements TripService {
     public void changeTripStatus(Trip trip, TripStatus tripStatus) {
         Trip tripDb = tripDAO.getTrip(trip.getId());
 
-        if (tripDb == null)
+        if (tripDb == null) {
             tripDAO.saveTrip(trip);
-        else
+        } else {
             trip = tripDb;
+        }
 
         trip.setTripStatus(tripStatus);
         tripDAO.updateTrip(trip);

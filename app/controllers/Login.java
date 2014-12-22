@@ -1,6 +1,5 @@
 package controllers;
 
-
 import play.data.Form;
 import play.mvc.Controller;
 import play.mvc.Result;
@@ -18,8 +17,8 @@ import static play.data.Form.form;
  */
 public class Login extends Controller {
 
-    public static Result renderLogin(){
-        if (!session().isEmpty()){
+    public static Result renderLogin() {
+        if (!session().isEmpty()) {
             return Login.logout();
         }
         return ok(login.render(form(LoginForm.class)));
@@ -37,39 +36,36 @@ public class Login extends Controller {
         System.out.println(password);
         System.out.println("***************************");
 
-
         UserService userService = new UserServiceImpl();
-        boolean result = userService.login(email,password);
+        boolean result = userService.login(email, password);
 
-        if(result == true) {
+        if (result == true) {
             System.out.println("Login successful!");
             session().clear();
             session("email", form.email);   //Vytvoření a uložení potřebných dat do session (email bude nahrazen usernamem)
-            session().put("designation",UserDAOImpl.getDesignation(form.email));    //Designation je potřeba pro zobrazování tlačítek administrátora
+            session().put("designation", UserDAOImpl.getDesignation(form.email));    //Designation je potřeba pro zobrazování tlačítek administrátora
             return redirect(routes.Application.renderIndexLogined());
-        }
-        else{
+        } else {
             System.out.println("Login ERROR!");
             return badRequest(login.render(loginForm));
         }
 
         /*User user = Form.form(User.class).bindFromRequest().get();
-        List<User> allUsers = new Model.Finder(String.class, User.class).all();
-        for(User u : allUsers){
-            if((u.getUsername() == user.getUsername()) || (u.getPassword() == user.getPassword())){
-                return ok(index.render("Wasgood."));
-            }
-        }
-*/
-
+         List<User> allUsers = new Model.Finder(String.class, User.class).all();
+         for(User u : allUsers){
+         if((u.getUsername() == user.getUsername()) || (u.getPassword() == user.getPassword())){
+         return ok(index.render("Wasgood."));
+         }
+         }
+         */
     }
-
 
     public static Result logout() {
         session().clear();
         System.out.println("User has been logged out");
         return ok(logout.render("index"));
     }
+
     public static class LoginForm {
 
         public String email;

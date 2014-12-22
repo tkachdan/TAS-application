@@ -27,7 +27,7 @@ public class Application extends Controller {
 
     //TODO: can be put id to checkbox for future proceeding
     public static Result renderIndexLogined() {
-        if(session().isEmpty()){
+        if (session().isEmpty()) {
             return controllers.Login.renderLogin();
         }
         String str = "";
@@ -50,7 +50,7 @@ public class Application extends Controller {
     }
 
     public static Result renderTrip() {
-        if(session().isEmpty()){
+        if (session().isEmpty()) {
             return ok(login.render(form(Login.LoginForm.class)));
         }
         Map<String, String> data = Form.form().bindFromRequest().data();
@@ -92,6 +92,7 @@ public class Application extends Controller {
     }
 
     public static class Coordinates {
+
         double lat;
         double lon;
 
@@ -111,6 +112,5 @@ public class Application extends Controller {
             this.lat = lat;
         }
     }
-
 
 }

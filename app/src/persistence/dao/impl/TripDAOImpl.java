@@ -11,6 +11,7 @@ import java.util.List;
  * Created by Krasotin on 11.12.14.
  */
 public class TripDAOImpl implements TripDAO {
+
     @Override
     public void saveTrip(Trip trip) {
         Session session = new HibernateUtils().getSessionFactory().openSession();
@@ -31,11 +32,13 @@ public class TripDAOImpl implements TripDAO {
 
         session.close();
 
-        if (trip == (null))
+        if (trip == (null)) {
             return null;
+        }
 
-        if (trip.getPois().size() == 0)
+        if (trip.getPois().size() == 0) {
             trip.setPois(null);
+        }
 
         return trip;
     }
