@@ -1,0 +1,56 @@
+@(form: Form[PoiController.POIForm])
+
+@main("Add POI") {
+
+  <h1>Adding Poi</h1>
+  <br>
+  <form role="form" action="@routes.PoiController.createPoi()" method="post" id="input-form-edit">
+    <div class="form-group">
+      <label for="name">Name</label>
+      <input type="text" class="form-control" id="name" placeholder="Name" name="name">
+    </div>
+
+    <div class="form-group">
+      <label for="name">Minimal age</label>
+      <input type="number" class="form-control" id="Minimal age" placeholder="Minimal age" name="minimalAge" >
+    </div>
+
+    <div class="form-group">
+      <label for="name">cost</label>
+      <input type="number" class="form-control" id="cost" placeholder="cost" name="cost">
+    </div>
+
+    <div class="form-group">
+      <label for="name">latitude</label>
+      <input type="number" class="form-control" id="latitude" placeholder="latitude" name="latitude">
+    </div>
+
+    <div class="form-group">
+      <label for="name">longtitude</label>
+      <input type="number" class="form-control" id="longtitude" placeholder="longtitude" name="longtitude">
+    </div>
+
+    <div class="form-group">
+      <label for="name">Poi type:</label>
+      <select class="form-control" id="type" name="type">
+        <option value="CULTURE">culture</option>
+        <option value="HISTORY">history</option>
+      </select>
+    </div>
+    @*
+    <div class="form-group">
+    <label for="name">Requred time</label>
+    <input type="time" placeholder="hrs:mins" class="form-control" name="requiredTime">
+    </div>*@
+
+    <div class="form-group">
+      <label for="name">Is accesible for handicaped people : </label>
+      <br>
+      <input type="radio" name="accesibility" value="TRUE">Yes
+      <input type="radio" name="accesibility" value="FALSE">No
+    </div>
+
+    <button type="submit" class="btn btn-primary">Submit</button>
+
+  </form>
+}

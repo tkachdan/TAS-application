@@ -10,6 +10,10 @@ import java.util.List;
  */
 public interface PoiService {
 
+    public void upadtePoi(Poi poi);
+
+    public void addPoi(Poi poi);
+
     public Poi getPoiById(int id);
 
     public List<Poi> getAllPoisByCost(int maxCost);

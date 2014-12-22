@@ -38,7 +38,8 @@ public class Poi {
     }
 
     @Id
-    @GeneratedValue
+    @SequenceGenerator(name = "pk_sequence", sequenceName = "entity_id_seq", allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.AUTO, generator = "pk_sequence")
     @Column(name = "id")
     public int getId() {
         return id;
