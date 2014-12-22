@@ -16,7 +16,7 @@ import static play.data.Form.form;
 public class UserControler extends Controller {
 
     private static String err = "";
-    public static UserForm mem = new UserForm();
+    protected static UserForm mem = new UserForm();
 
     public static Result renderUser() {
         if (session().isEmpty()) {

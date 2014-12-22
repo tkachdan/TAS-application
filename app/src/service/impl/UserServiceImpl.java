@@ -10,7 +10,7 @@ import src.service.UserService;
  */
 public class UserServiceImpl implements UserService {
 
-    protected static UserDAO userDAO = new UserDAOImpl();
+    protected static final UserDAO userDAO = new UserDAOImpl();
 
     @Override
     public boolean login(String email, String password) {

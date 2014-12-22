@@ -30,7 +30,8 @@ public class Application extends Controller {
         if (session().isEmpty()) {
             return controllers.Login.renderLogin();
         }
-        String str = "";
+        StringBuffer buf = new StringBuffer();
+        String str;
         if (session().isEmpty()) {
             return controllers.Application.index();
         } else {
@@ -38,13 +39,19 @@ public class Application extends Controller {
             List<Poi> poiList = poiService.getAllPois();
             int checkboxId = 1;
             for (Poi p : poiList) {
-                str += "<tr>";
-                str += " <td> <input type=\"checkbox\" id=" + checkboxId + " name=\"" + checkboxId + "\" value=\"checked\" /> </td>";
-                str += "<td>" + p.getId() + "</td> <td>" + p.getName() + "</td> <td>" + p.getType() + "</td> <td>"
-                        + p.getCost() + "</td>";
-                str += "</tr>";
+               // str += "<tr>";
+                buf.append("<tr>");
+                //str += " <td> <input type=\"checkbox\" id=" + checkboxId + " name=\"" + checkboxId + "\" value=\"checked\" /> </td>";
+                buf.append(" <td> <input type=\"checkbox\" id=\" + checkboxId + \" name=\\\"\" + checkboxId + \"\" value=\"checked\" /> </td>");
+               // str += "<td>" + p.getId() + "</td> <td>" + p.getName() + "</td> <td>" + p.getType() + "</td> <td>"
+                //        + p.getCost() + "</td>";
+                buf.append("<td>" + p.getId() + "</td> <td>" + p.getName() + "</td> <td>" + p.getType() + "</td> <td>"
+                        + p.getCost() + "</td>");
+                //str += "</tr>";
+                buf.append("</tr>");
                 checkboxId++;
             }
+            str=buf.toString();
             return ok(indexLogined.render(str));
         }
     }
@@ -64,7 +71,8 @@ public class Application extends Controller {
             poiList.add(poi);
             Logger.info(poi.getName());
         }
-        String str = "";
+        String str;
+        StringBuffer buf = new StringBuffer();
         List<Coordinates> coordList = new ArrayList<>();
         for (Poi p : poiList) {
             Coordinates c = new Coordinates();
@@ -73,11 +81,16 @@ public class Application extends Controller {
 
             coordList.add(c);
 
-            str += "<tr>";
-            str += "<td>" + p.getId() + "</td> <td>" + p.getName() + "</td> <td>" + p.getType() + "</td> <td>"
-                    + p.getCost() + "</td>";
-            str += "</tr>";
+            //str += "<tr>";
+            buf.append("<tr>");
+            //str += "<td>" + p.getId() + "</td> <td>" + p.getName() + "</td> <td>" + p.getType() + "</td> <td>"
+            //        + p.getCost() + "</td>";
+            buf.append("<td>" + p.getId() + "</td> <td>" + p.getName() + "</td> <td>" + p.getType() + "</td> <td>"
+                    + p.getCost() + "</td>");
+            //str += "</tr>";
+            buf.append("</tr>");
         }
+        str=buf.toString();
 
         JsonNode json = Json.toJson(coordList);
         return ok(trip.render(str, json));

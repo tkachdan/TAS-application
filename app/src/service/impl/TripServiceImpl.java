@@ -37,7 +37,7 @@ public class TripServiceImpl implements TripService {
         trip.addPoi(poi);
         tripDAO.updateTrip(trip);
 
-        Trip tripDb2 = tripDAO.getTrip(trip.getId());
+        //Trip tripDb2 = tripDAO.getTrip(trip.getId());
     }
 
     @Override
