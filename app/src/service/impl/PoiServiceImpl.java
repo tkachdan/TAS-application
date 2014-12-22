@@ -12,7 +12,7 @@ import java.util.List;
  * Created by tkachdan on 11-Dec-14.
  */
 public class PoiServiceImpl implements PoiService {
-    protected static PoiDAO poiDAO = new PoiDAOImpl();
+    protected static final PoiDAO poiDAO = new PoiDAOImpl();
 
     @Override
     public void upadtePoi(Poi poi) {
