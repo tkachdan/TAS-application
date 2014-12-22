@@ -39,11 +39,11 @@ public class Application extends Controller {
             List<Poi> poiList = poiService.getAllPois();
             int checkboxId = 1;
             for (Poi p : poiList) {
-               // str += "<tr>";
+                // str += "<tr>";
                 buf.append("<tr>");
                 //str += " <td> <input type=\"checkbox\" id=" + checkboxId + " name=\"" + checkboxId + "\" value=\"checked\" /> </td>";
                 buf.append(" <td> <input type=\"checkbox\" id=\" + checkboxId + \" name=\\\"\" + checkboxId + \"\" value=\"checked\" /> </td>");
-               // str += "<td>" + p.getId() + "</td> <td>" + p.getName() + "</td> <td>" + p.getType() + "</td> <td>"
+                // str += "<td>" + p.getId() + "</td> <td>" + p.getName() + "</td> <td>" + p.getType() + "</td> <td>"
                 //        + p.getCost() + "</td>";
                 buf.append("<td>" + p.getId() + "</td> <td>" + p.getName() + "</td> <td>" + p.getType() + "</td> <td>"
                         + p.getCost() + "</td>");
@@ -51,7 +51,7 @@ public class Application extends Controller {
                 buf.append("</tr>");
                 checkboxId++;
             }
-            str=buf.toString();
+            str = buf.toString();
             return ok(indexLogined.render(str));
         }
     }
@@ -90,7 +90,7 @@ public class Application extends Controller {
             //str += "</tr>";
             buf.append("</tr>");
         }
-        str=buf.toString();
+        str = buf.toString();
 
         JsonNode json = Json.toJson(coordList);
         return ok(trip.render(str, json));

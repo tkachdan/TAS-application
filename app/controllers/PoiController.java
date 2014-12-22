@@ -37,7 +37,6 @@ public class PoiController extends Controller {
 
     public static Result editPoi() {
 
-
         if (session().isEmpty()) {
             return controllers.Login.renderLogin();
         }
@@ -107,7 +106,6 @@ public class PoiController extends Controller {
         return badRequest(editPoi.render(form(POIForm.class)));
     }
 
-
     public static Result createPoi() {
 
         if (session().isEmpty()) {
@@ -124,8 +122,7 @@ public class PoiController extends Controller {
                 || poiForm.cost < 0
                 || poiForm.latitude < 0
                 || poiForm.longtitude < 0
-                || poiForm.minimalAge < 0
-                ) {
+                || poiForm.minimalAge < 0) {
             return badRequest(createPoi.render(form(POIForm.class)));
         }
         Poi poi = new Poi(poiForm.accesibility, poiForm.minimalAge, poiForm.name, poiForm.rating, new Time(System.currentTimeMillis()), poiForm.type, poiForm.cost, poiForm.latitude, poiForm.longtitude);
