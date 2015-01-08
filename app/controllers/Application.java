@@ -9,6 +9,7 @@ import play.mvc.Result;
 import src.persistence.dao.PoiDAO;
 import src.persistence.dao.impl.PoiDAOImpl;
 import src.persistence.models.Poi;
+import src.persistence.models.PoiType;
 import src.service.PoiService;
 import src.service.impl.PoiServiceImpl;
 import views.html.*;
@@ -34,8 +35,24 @@ public class Application extends Controller {
         if (session().isEmpty()) {
             return controllers.Application.index();
         } else {
+            Map<String, String> data = Form.form().bindFromRequest().data();
+            String type = null;
+            for (Map.Entry<String, String> entry : data.entrySet()) {
+                type = entry.getValue();
+
+
+            }
+
+
             PoiService poiService = new PoiServiceImpl();
-            List<Poi> poiList = poiService.getAllPois();
+            List<Poi> poiList;
+            if (type != null) {
+                PoiType poiType = PoiType.valueOf(type);
+                poiList = poiService.getAllPoisByType(poiType);
+            } else {
+                poiList = poiService.getAllPois();
+            }
+
             int checkboxId = 1;
             for (Poi p : poiList) {
                 str += "<tr>";
@@ -58,7 +75,6 @@ public class Application extends Controller {
 
         List<Poi> poiList = new ArrayList<>();
         for (Map.Entry<String, String> entry : data.entrySet()) {
-            //TODO: Redo with Service @Krasotin
             int id = Integer.parseInt(entry.getKey());
             Poi poi = poiDAO.getPoi(Integer.parseInt(entry.getKey()));
             poiList.add(poi);
