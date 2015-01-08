@@ -13,7 +13,17 @@ import java.util.List;
  */
 public class PoiServiceImpl implements PoiService {
 
-    protected static PoiDAO poiDAO = new PoiDAOImpl();
+    protected static final PoiDAO poiDAO = new PoiDAOImpl();
+
+    @Override
+    public void upadtePoi(Poi poi) {
+        poiDAO.updatePoi(poi);
+    }
+
+    @Override
+    public void addPoi(Poi poi) {
+        poiDAO.savePoi(poi);
+    }
 
     @Override
     public Poi getPoiById(int id) {
