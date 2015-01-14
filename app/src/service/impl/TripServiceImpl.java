@@ -32,12 +32,11 @@ public class TripServiceImpl implements TripService {
             tripDAO.saveTrip(trip);
         } else {
             trip = tripDb;
+            //tripDAO.updateTrip(trip);
         }
 
         trip.addPoi(poi);
         tripDAO.updateTrip(trip);
-
-        Trip tripDb2 = tripDAO.getTrip(trip.getId());
     }
 
     @Override

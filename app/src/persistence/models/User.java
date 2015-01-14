@@ -1,6 +1,8 @@
 package src.persistence.models;
 
 import javax.persistence.*;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * Class representing user. Created by Daria on 05-Dec-14.
@@ -16,6 +18,8 @@ public class User {
     private String lastName;
     private String password;
     private String username;
+
+    private Set<Trip> trips = new HashSet<>();
 
     public User() {
     }
@@ -96,6 +100,19 @@ public class User {
         this.username = username;
     }
 
+    @OneToMany(fetch = FetchType.EAGER)
+    public Set<Trip> getTrips() {
+        return trips;
+    }
+
+    public void setTrips(Set<Trip> trips) {
+        this.trips = trips;
+    }
+
+    public void addTrip(Trip newTrip) {
+        trips.add(newTrip);
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -154,6 +171,7 @@ public class User {
                 + ", lastName='" + lastName + '\''
                 + ", password='" + password + '\''
                 + ", username='" + username + '\''
+                + ", trips='" + trips + '\''
                 + '}';
     }
 }

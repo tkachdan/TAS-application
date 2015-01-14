@@ -6,21 +6,27 @@ import play.data.Form;
 import play.libs.Json;
 import play.mvc.Controller;
 import play.mvc.Result;
-import src.persistence.dao.PoiDAO;
 import src.persistence.dao.impl.PoiDAOImpl;
+import src.persistence.dao.impl.TripDAOImpl;
+import src.persistence.dao.impl.UserDAOImpl;
 import src.persistence.models.Poi;
 import src.persistence.models.PoiType;
+import src.persistence.models.Trip;
+import src.persistence.models.User;
 import src.service.PoiService;
 import src.service.impl.PoiServiceImpl;
+import src.service.impl.TripServiceImpl;
 import views.html.*;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import static play.data.Form.form;
 
 public class Application extends Controller {
+    private static PoiDAOImpl poiDAO = new PoiDAOImpl();
+    private static UserDAOImpl userDAO = new UserDAOImpl();
+    private static TripDAOImpl tripDAO = new TripDAOImpl();
+    private static TripServiceImpl tripService = new TripServiceImpl();
 
     public static Result index() {
         return ok(index.render("Your new application is ready."));
@@ -31,6 +37,8 @@ public class Application extends Controller {
         if (session().isEmpty()) {
             return controllers.Login.renderLogin();
         }
+
+
         String str = "";
         if (session().isEmpty()) {
             return controllers.Application.index();
@@ -70,18 +78,28 @@ public class Application extends Controller {
         if (session().isEmpty()) {
             return ok(login.render(form(Login.LoginForm.class)));
         }
-        Map<String, String> data = Form.form().bindFromRequest().data();
-        PoiDAO poiDAO = new PoiDAOImpl();
 
+        //get user
+        String userEmail = session().get("email");
+        User user = userDAO.getUserByEmail(userEmail);
+        System.out.println(userEmail);
+        System.out.println(user);
+
+        //pois id for parsing at cart
+        String poisString = "";
+
+        Map<String, String> data = Form.form().bindFromRequest().data();
         List<Poi> poiList = new ArrayList<>();
         for (Map.Entry<String, String> entry : data.entrySet()) {
             int id = Integer.parseInt(entry.getKey());
             Poi poi = poiDAO.getPoi(Integer.parseInt(entry.getKey()));
             poiList.add(poi);
+            poisString += poi.getId() + "-";
             Logger.info(poi.getName());
         }
         String str = "";
         List<Coordinates> coordList = new ArrayList<>();
+
         for (Poi p : poiList) {
             Coordinates c = new Coordinates();
             c.lat = p.getLatitude();
@@ -96,7 +114,71 @@ public class Application extends Controller {
         }
 
         JsonNode json = Json.toJson(coordList);
-        return ok(trip.render(str, json));
+        return ok(trip.render(str, json, poisString));
+    }
+
+    public static Result renderCart(String poisString) {
+        if (session().isEmpty()) {
+            return ok(login.render(form(Login.LoginForm.class)));
+        }
+        Map<String, String> data = Form.form().bindFromRequest().data();
+
+        //System.out.println(poisString);
+        System.out.println("Coming pois");
+        String[] poisIdString = poisString.split("-");
+        int[] poisIdInt = new int[poisIdString.length];
+        Set<Poi> newTripPOIS = new HashSet<>();
+
+        for (int i = 0; i < poisIdString.length; i++) {
+            System.out.println(poisIdString[i]);
+            poisIdInt[i] = Integer.valueOf(poisIdString[i]);
+            newTripPOIS.add(poiDAO.getPoi(poisIdInt[i]));
+            System.out.println("int POI " + poisIdInt[i]);
+        }
+        System.out.println("POIs set " + newTripPOIS);
+        System.out.println("============");
+
+        //get user data
+        System.out.println("Get user data");
+        String userEmail = session().get("email");
+        User user = userDAO.getUserByEmail(userEmail);
+        System.out.println("user mail " + userEmail);
+        System.out.println("user " + user);
+        System.out.println("============");
+
+        //add trip to user
+        Trip newTrip = new Trip();
+        newTrip.setCost(0);
+        for (Poi poi : newTripPOIS) {
+            newTrip.addPoi(poi);
+            newTrip.setCost(newTrip.getCost() + poi.getCost());
+        }
+
+        System.out.println(newTrip);
+
+        System.out.println("============");
+
+
+        String poiStrTable = "";
+        List<Poi> poiList = new ArrayList<>();
+        for (Map.Entry<String, String> entry : data.entrySet()) {
+            poiStrTable = entry.getValue();
+        }
+        System.out.println(poiStrTable);
+
+
+        Set<Trip> userTrips = new HashSet<>();
+        userTrips = user.getTrips();
+
+        String str = "";
+        for (Trip trip : userTrips) {
+            str += "<tr>";
+            str += "<td>" + trip.getId() + "</td> <td>" + trip.getPois().toString() + "</td> <td>" + trip.getTripStatus() + "</td>";
+            str += "</tr>";
+        }
+
+
+        return ok(cart.render(str));
     }
 
     public static Result renderAdd() {

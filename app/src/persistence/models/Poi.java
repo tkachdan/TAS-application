@@ -203,15 +203,15 @@ public class Poi {
     public String toString() {
         return "Poi{"
                 + "id=" + id
-                + ", accesibility=" + accesibility
-                + ", minimalAge=" + minimalAge
+                /*+ ", accesibility=" + accesibility
+                + ", minimalAge=" + minimalAge*/
                 + ", name='" + name + '\''
-                + ", rating=" + rating
-                + ", requiredTime=" + requiredTime
+                /*+ ", rating=" + rating
+                + ", requiredTime=" + requiredTime*/
                 + ", type=" + type
                 + ", cost=" + cost
-                + ", latitude=" + latitude
-                + ", longtitude=" + longtitude
+                /*+ ", latitude=" + latitude
+                + ", longtitude=" + longtitude*/
                 + '}';
     }
 }

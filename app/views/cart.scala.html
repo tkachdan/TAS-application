@@ -1,0 +1,23 @@
+@(message: String)
+@main("My cart") {
+    <h1>Card</h1>
+    <h2>You cart contains:</h2>
+
+
+    <div class="table-view " style="max-width : 70 %">
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>Id</th>
+                    <th>POIs</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+            <tbody>
+            @Html(message)
+            </tbody>
+        </table>
+    </div>
+
+
+}
