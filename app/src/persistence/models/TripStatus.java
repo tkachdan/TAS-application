@@ -8,5 +8,5 @@ public enum TripStatus {
     PENDING,
     CANCELED,
     PAID,
-    NONPAID
+    NOTPAID
 }

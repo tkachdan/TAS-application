@@ -1,20 +1,28 @@
 @(message: String)
 @main("My cart") {
+
     <h1>Card</h1>
     <h2>You cart contains:</h2>
 
 
     <div class="table-view " style="max-width : 70 %">
+
+        <a href="@routes.Application.renderIndexLogined()">pay!!!!</a>
+
         <table class="table table-bordered">
             <thead>
                 <tr>
                     <th>Id</th>
                     <th>POIs</th>
+                    <th>Cost</th>
                     <th>Status</th>
+                    <th>Pay</th>
+                    <th>Delete</th>
                 </tr>
             </thead>
             <tbody>
             @Html(message)
+
             </tbody>
         </table>
     </div>

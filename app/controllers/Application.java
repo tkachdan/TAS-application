@@ -9,10 +9,7 @@ import play.mvc.Result;
 import src.persistence.dao.impl.PoiDAOImpl;
 import src.persistence.dao.impl.TripDAOImpl;
 import src.persistence.dao.impl.UserDAOImpl;
-import src.persistence.models.Poi;
-import src.persistence.models.PoiType;
-import src.persistence.models.Trip;
-import src.persistence.models.User;
+import src.persistence.models.*;
 import src.service.PoiService;
 import src.service.impl.PoiServiceImpl;
 import src.service.impl.TripServiceImpl;
@@ -146,18 +143,23 @@ public class Application extends Controller {
         System.out.println("user " + user);
         System.out.println("============");
 
-        //add trip to user
+        //create trip from poi
         Trip newTrip = new Trip();
         newTrip.setCost(0);
+        newTrip.setTripStatus(TripStatus.NOTPAID);
         for (Poi poi : newTripPOIS) {
             newTrip.addPoi(poi);
             newTrip.setCost(newTrip.getCost() + poi.getCost());
         }
-
         System.out.println(newTrip);
-
         System.out.println("============");
 
+        //assign trip to user
+        tripDAO.saveTrip(newTrip);
+        user.addTrip(newTrip);
+        userDAO.updateUser(user);
+        System.out.println(user);
+        System.out.println("============");
 
         String poiStrTable = "";
         List<Poi> poiList = new ArrayList<>();
@@ -167,13 +169,23 @@ public class Application extends Controller {
         System.out.println(poiStrTable);
 
 
-        Set<Trip> userTrips = new HashSet<>();
-        userTrips = user.getTrips();
+        Set<Trip> userTrips = user.getTrips();
 
         String str = "";
         for (Trip trip : userTrips) {
+            Set<Poi> POIsInTrip = trip.getPois();
             str += "<tr>";
-            str += "<td>" + trip.getId() + "</td> <td>" + trip.getPois().toString() + "</td> <td>" + trip.getTripStatus() + "</td>";
+            str += "<td>" + trip.getId() + "</td>" + "<td>";
+            for (Poi poi : POIsInTrip)
+                str += "id: " + poi.getId() + " name: " + poi.getName() + "<br>";
+            //str += "<td>" + trip.getPois().toString() + "</td>";
+            str += "</td>" + "<td>" + trip.getCost() + "</td>" + "<td>" + trip.getTripStatus() + "</td>";
+            //str += " <td> <input type=\"checkbox\" id=" + checkboxId + " name=\"" + checkboxId + "\" value=\"checked\" /> </td>";
+            /*str += "<td><form action=\"pay\"> <input type=\"submit\"id=" + trip.getId() +  "value=\"Pay\"></td>";*/
+            str += "<td> <a href=\"/pay_trip?id=" + trip.getId() + " \"   >pay for trip id = " + trip.getId() + "</a></td>";
+            str += " <td> <input type=\"checkbox\" id=" + trip.getId() + " name=ToDel\"" + trip.getId() + "\" value=\"checked\" /> </td>";
+
+
             str += "</tr>";
         }
 
