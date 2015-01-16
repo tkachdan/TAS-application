@@ -8,7 +8,6 @@ import src.persistence.models.Trip;
 import src.persistence.models.TripStatus;
 import src.service.TripService;
 
-import java.util.HashSet;
 import java.util.Set;
 
 /**
@@ -19,6 +18,8 @@ public class TripServiceImpl implements TripService {
     static UserDAOImpl userDAO = new UserDAOImpl();
     static PoiDAOImpl poiDAO = new PoiDAOImpl();
     static TripDAOImpl tripDAO = new TripDAOImpl();
+
+    static PoiServiceImpl poiService = new PoiServiceImpl();
 
     @Override
     public void addPoi(Trip trip, Poi poi) {
@@ -57,18 +58,7 @@ public class TripServiceImpl implements TripService {
     }
 
     public Trip createTripFromPoisString(String poisString) {
-        String[] poisIdString = poisString.split("-");
-        int[] poisIdInt = new int[poisIdString.length];
-        Set<Poi> newTripPOIS = new HashSet<>();
-
-        for (int i = 0; i < poisIdString.length; i++) {
-            System.out.println(poisIdString[i]);
-            poisIdInt[i] = Integer.valueOf(poisIdString[i]);
-            newTripPOIS.add(poiDAO.getPoi(poisIdInt[i]));
-            System.out.println("int POI " + poisIdInt[i]);
-        }
-        System.out.println("POIs set " + newTripPOIS);
-        System.out.println("============");
+        Set<Poi> newTripPOIS = poiService.getPoisFromString(poisString);
 
         //create trip from poi
         Trip newTrip = new Trip();
