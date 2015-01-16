@@ -30,7 +30,8 @@
     </div>
     <br>
 
-    <form role="form" action="@routes.Application.renderCart(poiString)" method="get" id="input-form-edit">
+    <form role="form" action="@routes.Application.renderCart()" method="get" id="input-form-edit">
+        <input type="hidden" name="pois_to_trip" value="@poiString">
         <button type="submit" class="btn btn-primary">Add to cart</button>
     </form>
 

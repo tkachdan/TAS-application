@@ -7,7 +7,7 @@
 # Home page
 GET         /                     controllers.Application.index()
 
-GET         /cart:poisString        controllers.Application.renderCart(poisString: String)
+GET        /cart        controllers.Application.renderCart()
 
 GET         /index-logined        controllers.Application.renderIndexLogined()
 

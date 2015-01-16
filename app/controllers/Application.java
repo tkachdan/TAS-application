@@ -9,13 +9,19 @@ import play.mvc.Result;
 import src.persistence.dao.impl.PoiDAOImpl;
 import src.persistence.dao.impl.TripDAOImpl;
 import src.persistence.dao.impl.UserDAOImpl;
-import src.persistence.models.*;
+import src.persistence.models.Poi;
+import src.persistence.models.PoiType;
+import src.persistence.models.Trip;
+import src.persistence.models.User;
 import src.service.PoiService;
 import src.service.impl.PoiServiceImpl;
 import src.service.impl.TripServiceImpl;
 import views.html.*;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 import static play.data.Form.form;
 
@@ -35,7 +41,6 @@ public class Application extends Controller {
             return controllers.Login.renderLogin();
         }
 
-
         String str = "";
         if (session().isEmpty()) {
             return controllers.Application.index();
@@ -44,10 +49,7 @@ public class Application extends Controller {
             String type = null;
             for (Map.Entry<String, String> entry : data.entrySet()) {
                 type = entry.getValue();
-
-
             }
-
 
             PoiService poiService = new PoiServiceImpl();
             List<Poi> poiList;
@@ -94,6 +96,9 @@ public class Application extends Controller {
             poisString += poi.getId() + "-";
             Logger.info(poi.getName());
         }
+        if (poisString.length() > 1)
+            poisString = poisString.substring(0, poisString.length() - 1);
+
         String str = "";
         List<Coordinates> coordList = new ArrayList<>();
 
@@ -114,14 +119,18 @@ public class Application extends Controller {
         return ok(trip.render(str, json, poisString));
     }
 
-    public static Result renderCart(String poisString) {
+    public static Result renderCart() {
         if (session().isEmpty()) {
             return ok(login.render(form(Login.LoginForm.class)));
         }
-        Map<String, String> data = Form.form().bindFromRequest().data();
 
-        //System.out.println(poisString);
-        System.out.println("Coming pois");
+        /*System.out.println("Get POIs from GET request");
+        Map<String, String> data = Form.form().bindFromRequest().data();
+        String poisString = "";
+        for (Map.Entry<String, String> entry : data.entrySet()) {
+            poisString = entry.getValue();
+        }
+
         String[] poisIdString = poisString.split("-");
         int[] poisIdInt = new int[poisIdString.length];
         Set<Poi> newTripPOIS = new HashSet<>();
@@ -134,7 +143,7 @@ public class Application extends Controller {
         }
         System.out.println("POIs set " + newTripPOIS);
         System.out.println("============");
-
+        */
         //get user data
         System.out.println("Get user data");
         String userEmail = session().get("email");
@@ -142,7 +151,7 @@ public class Application extends Controller {
         System.out.println("user mail " + userEmail);
         System.out.println("user " + user);
         System.out.println("============");
-
+        /*
         //create trip from poi
         Trip newTrip = new Trip();
         newTrip.setCost(0);
@@ -155,7 +164,15 @@ public class Application extends Controller {
         System.out.println("============");
 
         //assign trip to user
-        tripDAO.saveTrip(newTrip);
+        tripDAO.saveTrip(newTrip);*/
+
+        Map<String, String> data = Form.form().bindFromRequest().data();
+        String poisString = "";
+        for (Map.Entry<String, String> entry : data.entrySet()) {
+            poisString = entry.getValue();
+        }
+        Trip newTrip = tripService.createTripFromPoisString(poisString);
+
         user.addTrip(newTrip);
         userDAO.updateUser(user);
         System.out.println(user);
@@ -222,5 +239,4 @@ public class Application extends Controller {
             this.lat = lat;
         }
     }
-
 }
