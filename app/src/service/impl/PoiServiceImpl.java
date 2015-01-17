@@ -6,7 +6,9 @@ import src.persistence.models.Poi;
 import src.persistence.models.PoiType;
 import src.service.PoiService;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 /**
  * Created by tkachdan on 11-Dec-14.
@@ -51,5 +53,22 @@ public class PoiServiceImpl implements PoiService {
     @Override
     public List<Poi> getAllPois() {
         return poiDAO.getAllPois();
+    }
+
+    public Set<Poi> getPoisFromString(String poisString) {
+        String[] poisIdString = poisString.split("-");
+        int[] poisIdInt = new int[poisIdString.length];
+        Set<Poi> poiSet = new HashSet<>();
+
+        for (int i = 0; i < poisIdString.length; i++) {
+            System.out.println(poisIdString[i]);
+            poisIdInt[i] = Integer.valueOf(poisIdString[i]);
+            poiSet.add(poiDAO.getPoi(poisIdInt[i]));
+            System.out.println("int POI " + poisIdInt[i]);
+        }
+        System.out.println("POIs set " + poiSet);
+        System.out.println("============");
+
+        return poiSet;
     }
 }

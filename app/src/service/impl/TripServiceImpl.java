@@ -8,6 +8,8 @@ import src.persistence.models.Trip;
 import src.persistence.models.TripStatus;
 import src.service.TripService;
 
+import java.util.Set;
+
 /**
  * Created by Krasotin on 11.12.14.
  */
@@ -16,6 +18,8 @@ public class TripServiceImpl implements TripService {
     static UserDAOImpl userDAO = new UserDAOImpl();
     static PoiDAOImpl poiDAO = new PoiDAOImpl();
     static TripDAOImpl tripDAO = new TripDAOImpl();
+
+    static PoiServiceImpl poiService = new PoiServiceImpl();
 
     @Override
     public void addPoi(Trip trip, Poi poi) {
@@ -32,12 +36,11 @@ public class TripServiceImpl implements TripService {
             tripDAO.saveTrip(trip);
         } else {
             trip = tripDb;
+            //tripDAO.updateTrip(trip);
         }
 
         trip.addPoi(poi);
         tripDAO.updateTrip(trip);
-
-        Trip tripDb2 = tripDAO.getTrip(trip.getId());
     }
 
     @Override
@@ -52,5 +55,27 @@ public class TripServiceImpl implements TripService {
 
         trip.setTripStatus(tripStatus);
         tripDAO.updateTrip(trip);
+    }
+
+    public Trip createTripFromPoisString(String poisString) {
+        Set<Poi> newTripPOIS = poiService.getPoisFromString(poisString);
+
+        //create trip from poi
+        Trip newTrip = new Trip();
+        newTrip.setCost(0);
+        newTrip.setTripStatus(TripStatus.NOTPAID);
+        for (Poi poi : newTripPOIS) {
+            newTrip.addPoi(poi);
+            newTrip.setCost(newTrip.getCost() + poi.getCost());
+        }
+        System.out.println(newTrip);
+        System.out.println("============");
+
+        tripDAO.saveTrip(newTrip);
+        return newTrip;
+    }
+
+    public Trip getTripById(int id) {
+        return tripDAO.getTrip(id);
     }
 }

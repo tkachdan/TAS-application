@@ -20,7 +20,6 @@ import static play.data.Form.form;
 public class PoiController extends Controller {
 
     private static PoiService poiService = new PoiServiceImpl();
-
     private static POIForm poiForm = new POIForm();
 
     /**

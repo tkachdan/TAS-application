@@ -21,7 +21,6 @@ import java.util.Map;
 import static play.data.Form.form;
 
 public class Application extends Controller {
-
     /**
      * rendering index page
      *
@@ -102,63 +101,35 @@ public class Application extends Controller {
         return ok(indexLogined.render(str));
     }
 
-    public static Result renderEditGenratedTrip() {
-
-        System.out.println("!! GENERATED !!");
-//        if (session().isEmpty()) {
-//            System.out.println("HERE");
-//
-//            return ok(login.render(form(Login.LoginForm.class)));
-//        }
-//        System.out.println("HERE");
-        String str = "";
-//        Map<String, String> data = Form.form().bindFromRequest().data();
-//        if (data.entrySet().isEmpty()) {
-//            System.out.println("!!!! EMPTY !!!");
-//        }
-//        for (Map.Entry<String, String> entry : data.entrySet()) {
-//            System.out.println(entry.toString());
-//        }
-//
-//
-//        // JsonNode json = Json.toJson(coordList);
-//        //   return ok(trip.render(str, json));
-        List<Coordinates> coordList = new ArrayList<>();
-        Coordinates c = new Coordinates();
-        c.lat = 50;
-        c.lon = 14;
-        coordList.add(c);
-        JsonNode json = Json.toJson(coordList);
-        return ok(trip.render(str, json));
-    }
-
-    /**
-     * rendering google map with users path between POIs and with detailed description of the path
-     *
-     * @return page with list of choosen pois , google map with path description
-     */
     public static Result renderTrip() {
         if (session().isEmpty()) {
             return ok(login.render(form(Login.LoginForm.class)));
         }
-        System.out.println("!! RENDER TRIP !!");
-        Map<String, String> data = Form.form().bindFromRequest().data();
-        PoiDAO poiDAO = new PoiDAOImpl();
 
+        //get user
+        String userEmail = session().get("email");
+        User user = userDAO.getUserByEmail(userEmail);
+        System.out.println(userEmail);
+        System.out.println(user);
+
+        //pois id for parsing at cart
+        String poisString = "";
+
+        Map<String, String> data = Form.form().bindFromRequest().data();
         List<Poi> poiList = new ArrayList<>();
         for (Map.Entry<String, String> entry : data.entrySet()) {
-            System.out.println(entry.toString());
-
             int id = Integer.parseInt(entry.getKey());
             Poi poi = poiDAO.getPoi(Integer.parseInt(entry.getKey()));
             poiList.add(poi);
+            poisString += poi.getId() + "-";
             Logger.info(poi.getName());
         }
+        if (poisString.length() > 1)
+            poisString = poisString.substring(0, poisString.length() - 1);
 
         String str = "";
-        int checkboxId = 1;
-
         List<Coordinates> coordList = new ArrayList<>();
+
         for (Poi p : poiList) {
             Coordinates c = new Coordinates();
             c.lat = p.getLatitude();
@@ -167,18 +138,103 @@ public class Application extends Controller {
             coordList.add(c);
 
             str += "<tr>";
-            str += " <td> <input type=\"checkbox\" id=" + checkboxId + " name=\"" + checkboxId + "\" value=\"checked\" /> </td>";
-            str += "<td>" + p.getName() + "</td> <td>" + p.getType() + "</td> <td>"
+            str += "<td>" + p.getId() + "</td> <td>" + p.getName() + "</td> <td>" + p.getType() + "</td> <td>"
                     + p.getCost() + "</td>";
             str += "</tr>";
         }
+
         JsonNode json = Json.toJson(coordList);
-        return ok(trip.render(str, json));
+        return ok(trip.render(str, json, poisString));
+    }
+    public static Result renderCart() {
+        if (session().isEmpty()) {
+            return ok(login.render(form(Login.LoginForm.class)));
+        }
+
+        Map<String, String> data = Form.form().bindFromRequest().data();
+        String poisString = "";
+        for (Map.Entry<String, String> entry : data.entrySet()) {
+            poisString = entry.getValue();
+        }
+
+        User user = userDAO.getUserByEmail(session().get("email"));
+
+        if (poisString.length() > 0) {
+            Trip newTrip = tripService.createTripFromPoisString(poisString);
+            user.addTrip(newTrip);
+            userDAO.updateUser(user);
+            System.out.println("updated usesr " + user);
+            System.out.println("============");
+        }
+
+        Set<Trip> userTrips = user.getTrips();
+        String str = "";
+        for (Trip trip : userTrips) {
+            Set<Poi> POIsInTrip = trip.getPois();
+            str += "<tr>";
+            str += "<td>" + trip.getId() + "</td>" + "<td>";
+            for (Poi poi : POIsInTrip)
+                str += "id: " + poi.getId() + " name: " + poi.getName() + "<br>";
+            str += "</td>" + "<td>" + trip.getCost() + "</td>" + "<td>" + trip.getTripStatus() + "</td>";
+            if (trip.getTripStatus() == TripStatus.PAID) {
+                str += "<td>You've already paid for this trip!</td>";
+            } else {
+                str += "<td> <a href=\"/payTrip?id=" + trip.getId() + " \"   >Pay for trip</a></td>";
+            }
+            str += " <td> <input type=\"checkbox\" id=" + trip.getId() + " name=ToDel\"" + trip.getId() + "\" value=\"checked\" /> </td>";
+
+
+            str += "</tr>";
+        }
+
+        return ok(cart.render(str));
     }
 
-    /**
-     * @return page with advertisement
-     */
+    public static Result renderPayment() {
+        if (session().isEmpty()) {
+            return ok(login.render(form(Login.LoginForm.class)));
+        }
+
+        String str = "";
+        Map<String, String> data = Form.form().bindFromRequest().data();
+        String tripIdString = "";
+        for (Map.Entry<String, String> entry : data.entrySet()) {
+            tripIdString = entry.getValue();
+        }
+        Trip trip = tripDAO.getTrip(Integer.valueOf(tripIdString));
+
+        int i = 1;
+        for (Poi poi : trip.getPois()) {
+            str += "<p>" + i + ". POI — " + poi.getName() + "</p>";
+            i++;
+        }
+
+        str += "<h4>Total cost: <i>" + trip.getCost() + "</i></h4>";
+
+        return ok(payTrip.render(str, String.valueOf(trip.getId())));
+    }
+
+    public static Result renderPaymentIsOk() {
+        if (session().isEmpty()) {
+            return ok(login.render(form(Login.LoginForm.class)));
+        }
+
+        Map<String, String> data = Form.form().bindFromRequest().data();
+        String tripIdString = "";
+        for (Map.Entry<String, String> entry : data.entrySet()) {
+            tripIdString = entry.getValue();
+        }
+        Trip trip = tripDAO.getTrip(Integer.valueOf(tripIdString));
+        System.out.println("before - " + trip);
+        trip.setTripStatus(TripStatus.PAID);
+        tripDAO.updateTrip(trip);
+        System.out.println("after - " + trip);
+
+        String str = "";
+        return ok(paymentIsOk.render(str));
+    }
+
+
     public static Result renderAdd() {
         return ok(add.render());
     }
@@ -208,4 +264,5 @@ public class Application extends Controller {
             this.lat = lat;
         }
     }
+
 }

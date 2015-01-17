@@ -3,10 +3,9 @@ package controllers;
 import play.data.Form;
 import play.mvc.Controller;
 import play.mvc.Result;
+import src.persistence.dao.impl.UserDAOImpl;
 import src.service.UserService;
 import src.service.impl.UserServiceImpl;
-import src.persistence.dao.impl.UserDAOImpl;
-import views.html.index;
 import views.html.login;
 import views.html.logout;
 
@@ -53,6 +52,8 @@ public class Login extends Controller {
             session().clear();
             session("email", form.email);   //Vytvoření a uložení potřebných dat do session (email bude nahrazen usernamem)
             session().put("designation", UserDAOImpl.getDesignation(form.email));    //Designation je potřeba pro zobrazování tlačítek administrátora
+            session().put("email", form.email);
+
             return redirect(routes.Application.renderIndexLogined());
         } else {
             System.out.println("Login ERROR!");

@@ -1,0 +1,17 @@
+@(message: String)(tripId: String)
+@main("Payment") {
+    <h1>Payment for trip</h1>
+    @Html(message)
+
+    <div class="form-group">
+        <form role="form" action="/paymentIsOk" method="GET">
+            <input class="form-control" style="width : 330 px ;" type="text" value="your card data" name="cardData"><br>
+            <input class="form-control" style="width : 330 px ;" type="text" value="CVV" name="cardCVV"><br>
+            <input class="form-control" style="width : 330 px ;" type="text" value="expired" name="cardExpired"><br>
+            <input type="hidden" value="@Html(tripId)" name="tripId">
+
+            <input class="btn btn-primary" type="submit" value="Pay" style="margin-top : 15 px ;">
+
+        </form>
+    </div>
+}
