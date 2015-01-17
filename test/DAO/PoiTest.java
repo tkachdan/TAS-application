@@ -27,7 +27,7 @@ public class PoiTest {
 
     @Test
     public void testSavePoi() {
-        clearDB();
+    //    clearDB();
 
         Poi poi = new Poi(true, 0, "Main bridge", 0.8, new Time(1, 0, 0), PoiType.CULTURE, 0, 0.0, 0.0);
         poiDAO.savePoi(poi);
@@ -41,7 +41,7 @@ public class PoiTest {
 
     @Test
     public void testGetPoi() {
-        clearDB();
+     //   clearDB();
 
         Poi poi = new Poi(true, 0, "Main bridge", 0.8, new Time(1, 0, 0), PoiType.HISTORY, 0, 0.0, 0.0);
         poiDAO.savePoi(poi);
@@ -52,7 +52,7 @@ public class PoiTest {
 
     @Test
     public void testGetNullPoi() {
-        clearDB();
+   //     clearDB();
 
         Poi poi = new Poi(true, 0, "Main bridge", 0.8, new Time(1, 0, 0), PoiType.CULTURE, 0, 0.0, 0.0);
         poiDAO.savePoi(poi);
@@ -64,7 +64,7 @@ public class PoiTest {
 
     @Test
     public void testGetAllPois() {
-        clearDB();
+      //  clearDB();
 
         Poi poi1 = new Poi(true, 0, "Main bridge", 0.8, new Time(1, 0, 0), PoiType.CULTURE, 0, 0.0, 0.0);
         Poi poi2 = new Poi(true, 0, "Second bridge", 0.8, new Time(1, 0, 0), PoiType.CULTURE, 0, 0.0, 0.0);
@@ -77,7 +77,7 @@ public class PoiTest {
 
     @Test
     public void testGetAllPoisByCost() {
-        clearDB();
+     //   clearDB();
 
         int maxCost = 500;
 
@@ -95,7 +95,7 @@ public class PoiTest {
 
     @Test
     public void testGetAllPoisByRating() {
-        clearDB();
+       // clearDB();
 
         double minRating = 2.5;
 
@@ -113,7 +113,7 @@ public class PoiTest {
 
     @Test
     public void testGetAllPoisByType() {
-        clearDB();
+    //    clearDB();
 
         Poi poi1 = new Poi(true, 0, "Main bridge", 0.8, new Time(1, 0, 0), PoiType.HISTORY, 0, 0.0, 0.0);
         Poi poi2 = new Poi(true, 0, "Second bridge", 0.8, new Time(1, 0, 0), PoiType.CULTURE, 0, 0.0, 0.0);

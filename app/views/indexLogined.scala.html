@@ -6,46 +6,94 @@
     <script src="@routes.Assets.at("js/loadMap.js")"></script>
 
     <h1>You're logined!</h1>
+
+    <nav class="navbar navbar-default">
+        <div class="container-fluid">
+                <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav">
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" style="display : @Buttons.adminButton()" data-toggle="dropdown" role="button" aria-expanded="false">
+                            POI options <span class="caret"></span></a>
+                        <ul class="dropdown-menu" role="menu">
+                            <li role="presentation"><a role="menuitem" tabindex="-1" href="/editPoi">Edit</a></li>
+                            <li role="presentation"><a role="menuitem" tabindex="-1" href="/createPoi">Create</a></li>
+                        </ul>
+                    </li>
+                </ul>
+
+                <ul class="nav navbar-nav navbar-right">
+                    <a class="button" href="@routes.Login.logout()">
+                        <button type="button" class="btn btn-primary">Logout</button>
+                    </a>
+                </ul>
+            </div><!-- /.navbar-collapse -->
+        </div><!-- /.container-fluid -->
+    </nav>
+
     <div class="btn-block">
 
-
-        <br>
-        <a class="button" href="@routes.Login.logout()">
-            <button type="button" class="btn btn-primary">Logout</button>
-        </a>
-        <a class="button" style="display : @Buttons.adminButton()" href="/ editPoi">
-            <button type="button" class="btn btn-primary">POIs edit</button>
-        </a>
-        <a class="button" style="display : @Buttons.adminButton()" href="/ createPoi">
-            <button type="button" class="btn btn-primary">create Poi</button>
-        </a>
-        <a class="button" style="display : @Buttons.adminButton()" href="/ user">
+        <a class="button" style="display : @Buttons.adminButton()" href="/user">
             <button type="button" class="btn btn-primary">USERs edit</button>
         </a>
-
         <br>
     </div>
 
     <h2>Choose places you'd like to visit:</h2>
-    <div>
 
-        <label>Filter by type:</label>
-        <form id="checkboxes-poi-form" action="@routes.Application.renderIndexLogined()" method="get">
-            <select name="type" class="form-control">
-                <option value="" name=""></option>
-                <option value="HISTORY" name="HISTORY">HISTORY</option>
-                <option value="CULTURE">CULTURE</option>
-                <option value="ART">ART</option>
-                <option value="EDUCATION">EDUCATION</option>
-            </select>
-            <br>
-            <input type="submit" class="btn btn-primary">
-        </form>
-    </div>
+    <form id="checkboxes-poi-form" action="@routes.Application.renderIndexLogined()" method="get" >
+        <div >
+            <table>
+                <tbody>
+                    <tr>
+                        <td><input type="checkbox" name="HISTORY" value="checked"/></td>
+                        <td>History</td>
+                        <td><input type="checkbox"  name="CULTURE" value="checked"/></td>
+                        <td>Culture</td>
+                        <td><input type="checkbox"  name="EDUCATION" value="checked"/></td>
+                        <td>Education</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
 
-    <form id="checkboxes-poi-form" action="@routes.Application.renderTrip()" method="get">
-        <div class="table-responsive">
-            <table class="table">
+        <label>Maximal cost</label>
+        <input type=range min=0 max=300 value=300 id=cost name="cost" onchange="updateCost(value)" style="width: 300px" >
+        <output for=cost id="a">300</output>
+
+        <script>
+        function updateCost(vol) {
+        document.querySelector('#a').value = vol;
+        }
+        </script>
+
+        <label>Minimal age</label>
+        <input type=range min=0 max=18 value=0 id=age name="age" list="ageSteps" onchange="updateAge(value)" style="width: 300px" >
+        <datalist id="ageSteps">
+            <option>0</option>
+            <option>6</option>
+            <option>10</option>
+            <option>12</option>
+            <option>15</option>
+            <option>18</option>
+        </datalist>
+        <output for=age id="b">0</output>
+
+        <script>
+        function updateAge(vol) {
+        document.querySelector('#b').value = vol;
+        }
+        </script>
+
+
+        <br/>
+        <br/>
+        <input type="submit" class="btn btn-primary">
+    </form>
+
+    <form id="checkboxes-poi-form" action="@routes.Application.renderTrip()" method="get" >
+        <div>
+            <table class="table" >
                 <thead>
                     <tr>
                         <th></th>
@@ -63,34 +111,6 @@
         <br>
         <input type="submit" class="btn btn-primary">
     </form>
-
-
-
-    <!-- Map support goes here -->
-    <!-- logic goes in /js/loadMap.js
-
-    <div class="container" id="map-canvas">
-        <h1>Find path between places</h1>
-
-           @*<form role="form" action=" @routes.Application.editBar()*@
-    " method="post" id="input-form-edit">
-    <div class="form-group">
-        <label for="id">First place (Lat, Lon):</label>
-        <input type="text" class="form-control" name="id" id="id" disabled="disabled" placeholder="Not avaible for now">
-    </div>
-    <div class="form-group">
-        <label for="name">Second place (Lat, Lon)</label>
-        <input type="text" class="form-control" id="name" name="name" disabled="disabled" placeholder="Not avaible for now">
-    </div>
-    <button type="submit" class="btn btn-default" disabled="disabled">Submit</button>
-    </form>
-
-    <div id="mymap"></div>
-    <div id="directionsPanel" style="float : right ; width : 30 % ; height 100 %">
-        <p>Total Distance: <span id="total"></span></p>
-    </div>
-    -->
-
 }
 
 

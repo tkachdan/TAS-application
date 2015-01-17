@@ -2,7 +2,7 @@
 
 @main("Add POI") {
 
-    <h1>Adding Poi</h1>
+    <h1>Create Poi</h1>
     <br>
     <form role="form" action="@routes.PoiController.createPoi()" method="post" id="input-form-edit">
 
@@ -38,12 +38,7 @@
                 <option value="HISTORY">history</option>
             </select>
         </div>
-        @*
-        <div class="form-group">
-        <label for="name">Requred time</label>
-        <input type="time" placeholder="hrs:mins" class="form-control" name="requiredTime">
-        </div>*@
-
+        
         <div class="form-group">
             <label for="name">Is accesible for handicaped people : </label>
             <br>
@@ -52,6 +47,11 @@
         </div>
 
         <button type="submit" class="btn btn-primary">Submit</button>
+        <br/>
+        <a class="button" href="/index-logined">
+            <button type="button" class="btn btn-primary">Back</button>
+        </a>
+
 
     </form>
 }

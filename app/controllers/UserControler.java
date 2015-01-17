@@ -18,6 +18,11 @@ public class UserControler extends Controller {
     private static String err = "";
     public static UserForm mem = new UserForm();
 
+    /**
+     * rendering page for user editing
+     *
+     * @return edit user page
+     */
     public static Result renderUser() {
         if (session().isEmpty()) {
             return controllers.Login.renderLogin();
@@ -30,6 +35,11 @@ public class UserControler extends Controller {
 
     }
 
+    /**
+     * based on which button the admin has pressed he can add/delete/edit users in database
+     *
+     * @return edit user page
+     */
     public static Result editUser() {
         if (session().isEmpty()) {
             return controllers.Login.renderLogin();
@@ -67,7 +77,6 @@ public class UserControler extends Controller {
             } else {
                 return ActionUpd(form);
             }
-
         }
         if (form.but.equals("Get")) {
             if (!form.id.isEmpty()) {
@@ -81,6 +90,9 @@ public class UserControler extends Controller {
         return ok(user.render(form(UserForm.class)));
     }
 
+    /*
+    * adding new user to the database
+    * */
     private static Result ActionAdd(UserForm form) {
         UserDAO dao = new UserDAOImpl();
         User us = new User(form.designation, form.email, form.firstname, form.lastname, form.password, form.username);
@@ -96,6 +108,9 @@ public class UserControler extends Controller {
         return ok(user.render(form(UserForm.class)));
     }
 
+    /*
+    * changing users attributes
+    * */
     private static Result ActionUpd(UserForm form) {
         int id = Integer.parseInt(form.id);
         UserDAO dao = new UserDAOImpl();
@@ -124,6 +139,9 @@ public class UserControler extends Controller {
         }
     }
 
+    /*
+    * pull the user from the database and fill the textfields with his attributes
+    * */
     private static Result ActionGet(UserForm form) {
         int id = Integer.parseInt(form.id);
         UserDAO dao = new UserDAOImpl();
@@ -144,6 +162,12 @@ public class UserControler extends Controller {
         }
     }
 
+    /**
+     * deleting userr from database based on his ID
+     *
+     * @param form form from page
+     * @return user edit page
+     */
     private static Result ActionDel(UserForm form) {
         int id = Integer.parseInt(form.id);
         UserDAO dao = new UserDAOImpl();
@@ -199,6 +223,11 @@ public class UserControler extends Controller {
         }
     }
 
+    /**
+     * error string
+     *
+     * @return
+     */
     public static String getButErr() {
         if (err.isEmpty()) {
             return "none";

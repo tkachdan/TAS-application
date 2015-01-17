@@ -46,6 +46,9 @@ public class PoiServiceImpl implements PoiService {
     }
 
     @Override
+    public List<Poi> getAllPoisByTypes(List<PoiType> types) { return poiDAO.getAllPoisByTypes(types); }
+
+    @Override
     public List<Poi> getAllPois() {
         return poiDAO.getAllPois();
     }

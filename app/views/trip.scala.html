@@ -12,26 +12,29 @@
     <h1>Trip overview</h1>
     <h2>You trip contains:</h2>
 
-    <div class="table-view " style="max-width : 70 %">
-        <table class="table table-bordered">
-            <thead>
-                <tr>
-                    <th>Id</th>
-                    <th>Name</th>
-                    <th>Type</th>
-                    <th>Cost</th>
-                </tr>
-            </thead>
-            <tbody>
-            @Html(message)
-            </tbody>
-        </table>
-    </div>
+    <form id="checkboxes-poi-form"
+    @*action="@routes.Application.renderEditGenratedTrip()"*@
+    method="get" >
+        <div class="table-view ">
+            <div class="table-responsive">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Id</th>
+                            <th>Name</th>
+                            <th>Type</th>
+                            <th>Cost</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    @Html(message)
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <input type="submit" class="btn btn-primary">
+    </form>
     <br>
-
-
-
-
     <!-- Map support goes here -->
     <!-- logic goes in /js/loadMap.js -->
 

@@ -29,7 +29,7 @@ public class UserTest {
 
     @Test
     public void testSaveUser() {
-        clearDB();
+      //  clearDB();
 
         User user = new User("", "junitTest1@mail.cz", "pavel", "cejka", "pass", "pavcejka");
         userDAO.saveUser(user);
@@ -43,7 +43,7 @@ public class UserTest {
 
     @Test
     public void testGetUser() {
-        clearDB();
+        //clearDB();
 
         User user = new User("", "junitTest2@mail.cz", "pavel", "cejka", "pass", "pavcejka");
         userDAO.saveUser(user);
@@ -54,7 +54,7 @@ public class UserTest {
 
     @Test
     public void testGetNullUser() {
-        clearDB();
+       // clearDB();
 
         User user = new User("", "test@mail.cz", "pavel", "cejka", "pass", "pavcejka");
         userDAO.saveUser(user);
@@ -66,7 +66,7 @@ public class UserTest {
 
     @Test
     public void testGetUserByEmail() {
-        clearDB();
+       // clearDB();
 
         User user = new User("", "test@mail.cz", "pavel", "cejka", "pass", "pavcejka");
         userDAO.saveUser(user);

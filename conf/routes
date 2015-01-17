@@ -17,19 +17,21 @@ GET         /login                controllers.Login.renderLogin()
 
 POST        /login                controllers.Login.authenticate()
 
+#GET         /trip                 controllers.Application.renderEditGenratedTrip()
+
 GET         /trip                 controllers.Application.renderTrip()
 
 GET         /user                 controllers.UserControler.renderUser()
 
 POST        /user                 controllers.UserControler.editUser()
 
-GET         /createPoi        controllers.PoiController.renderCreatePoi()
+GET         /createPoi            controllers.PoiController.renderCreatePoi()
 
-POST        /createPoi        controllers.PoiController.createPoi()
+POST        /createPoi            controllers.PoiController.createPoi()
 
-GET         /editPoi          controllers.PoiController.renderEditPoi()
+GET         /editPoi              controllers.PoiController.renderEditPoi()
 
-POST        /editPoi          controllers.PoiController.editPoi()
+POST        /editPoi              controllers.PoiController.editPoi()
 
 # Map static resources from the /public folder to the /assets URL path
 GET         /assets/*file         controllers.Assets.at(path="/public", file)

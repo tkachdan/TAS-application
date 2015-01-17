@@ -25,7 +25,7 @@ public class TripTest {
 
     @Test
     public void testSaveTrip() {
-        clearDB();
+      //  clearDB();
 
         Trip trip = new Trip("test", 0, null);
         tripDAO.saveTrip(trip);
@@ -40,7 +40,7 @@ public class TripTest {
 
     @Test
     public void testUpdateTrip() {
-        clearDB();
+//        clearDB();
 
         Trip trip = new Trip("test", 0, null);
         tripDAO.saveTrip(trip);
@@ -58,7 +58,7 @@ public class TripTest {
 
     @Test
     public void testGetTrip() {
-        clearDB();
+  //      clearDB();
 
         Trip trip = new Trip("test", 0, null);
         tripDAO.saveTrip(trip);
@@ -69,7 +69,7 @@ public class TripTest {
 
     @Test
     public void testGetNullTrip() {
-        clearDB();
+    //    clearDB();
 
         Trip trip = new Trip("test", 0, null);
         tripDAO.saveTrip(trip);

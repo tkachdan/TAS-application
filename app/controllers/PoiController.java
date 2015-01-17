@@ -23,18 +23,34 @@ public class PoiController extends Controller {
 
     private static POIForm poiForm = new POIForm();
 
+    /**
+     * @return page for editing POIs
+     */
     public static Result renderEditPoi() {
         return ok(editPoi.render(form(POIForm.class)));
     }
 
+    /**
+     * @return page for creating new POIs
+     */
     public static Result renderCreatePoi() {
         return ok(createPoi.render(form(POIForm.class)));
     }
 
+    /**
+     * @return form from page with entered values
+     */
     public static POIForm getPoiForm() {
         return poiForm;
     }
 
+
+    /**
+     * changing attributes of chosen POI
+     * only the admin can make those changes
+     *
+     * @return the edit poi page
+     */
     public static Result editPoi() {
 
         if (session().isEmpty()) {
@@ -48,6 +64,7 @@ public class PoiController extends Controller {
         Form<POIForm> form = form(POIForm.class).bindFromRequest();
         poiForm = form.get();
         Poi poi;
+
         if ((poi = poiService.getPoiById(poiForm.id)) != null) {
             if (poiForm.button.equals("get")) {
                 poiForm.accesibility = poi.getAccesibility();
@@ -63,19 +80,10 @@ public class PoiController extends Controller {
                 return ok(editPoi.render(form(POIForm.class)));
             }
             if (poiForm.button.equals("edit")) {
-
-                System.out.println("******** EDIT *********");
-                System.out.println(poiForm.accesibility);
-                System.out.println(poiForm.cost);
-                System.out.println(poiForm.latitude);
-                System.out.println(poiForm.longtitude);
-                System.out.println(poiForm.name);
-                System.out.println(poiForm.rating);
-                //      System.out.println(poiForm.requiredTime);
-                System.out.println(poiForm.type);
-                System.out.println(poiForm.minimalAge);
-                System.out.println("******** EDIT *********");
-
+                if (poiForm.name.equals("") || poiForm.latitude > 51 || poiForm.latitude < 49
+                        || poiForm.longtitude > 15 || poiForm.longtitude < 14) {
+                    return Application.renderIndexLogined();
+                }
                 poi.setAccesibility(poiForm.accesibility);
                 poi.setCost(poiForm.cost);
                 poi.setId(poiForm.id);
@@ -85,7 +93,6 @@ public class PoiController extends Controller {
                 poi.setName(poiForm.name);
                 poi.setType(poiForm.type);
                 poiService.upadtePoi(poi);
-
                 return ok(editPoi.render(form(POIForm.class)));
             } else {
                 return badRequest(editPoi.render(form(POIForm.class)));
@@ -94,6 +101,11 @@ public class PoiController extends Controller {
         return badRequest(editPoi.render(form(POIForm.class)));
     }
 
+    /**
+     * creating new poi and add it to the database
+     *
+     * @return create poi page
+     */
     public static Result createPoi() {
 
         if (session().isEmpty()) {
@@ -106,6 +118,21 @@ public class PoiController extends Controller {
         Form<POIForm> form = form(POIForm.class).bindFromRequest();
         poiForm = form.get();
 
+        if (poiForm.name.equals("") || poiForm.latitude > 51 || poiForm.latitude < 49
+                || poiForm.longtitude > 15 || poiForm.longtitude < 14 || poiForm.minimalAge < 0
+                || poiForm.cost < 0) {
+            return Application.renderIndexLogined();
+        }
+        System.out.println(poiForm.accesibility);
+        System.out.println(poiForm.cost);
+        System.out.println(poiForm.id);
+        System.out.println(poiForm.latitude);
+        System.out.println(poiForm.longtitude);
+        System.out.println(poiForm.minimalAge);
+        System.out.println(poiForm.name);
+        System.out.println(poiForm.rating);
+        System.out.println(poiForm.type);
+
         if (poiForm.name == null
                 || poiForm.cost < 0
                 || poiForm.latitude < 0
@@ -113,22 +140,11 @@ public class PoiController extends Controller {
                 || poiForm.minimalAge < 0) {
             return badRequest(createPoi.render(form(POIForm.class)));
         }
-        System.out.println("******** CREATE *********");
-        System.out.println("ACCESS : " + poiForm.accesibility);
-        System.out.println("COST : " + poiForm.cost);
-        System.out.println("LAT : " + poiForm.latitude);
-        System.out.println("LON : " + poiForm.longtitude);
-        System.out.println("NAME : " + poiForm.name);
-        System.out.println("RATING : " + poiForm.rating);
-        //      System.out.println(poiForm.requiredTime);
-        System.out.println("TYPE : " + poiForm.type);
-        System.out.println("MIN AGE : " + poiForm.minimalAge);
-        System.out.println("******** CREATE *********");
         Poi poi = new Poi(poiForm.accesibility, poiForm.minimalAge, poiForm.name, poiForm.rating, new Time(System.currentTimeMillis()), poiForm.type, poiForm.cost, poiForm.latitude, poiForm.longtitude);
         poiService.addPoi(poi);
-        System.out.println(poi.getName());
         return ok(createPoi.render(form(POIForm.class)));
     }
+
 
     public static class POIForm {
 

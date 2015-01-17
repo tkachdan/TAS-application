@@ -24,5 +24,7 @@ public interface PoiDAO {
 
     public List<Poi> getAllPoisByType(PoiType type);
 
+    public List<Poi> getAllPoisByTypes(List<PoiType> types);
+
     public List<Poi> getAllPois();
 }

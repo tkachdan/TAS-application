@@ -13,6 +13,11 @@ import java.util.List;
  */
 public class UserDAOImpl implements UserDAO {
 
+
+    /**
+     * saving new user to database
+     * @param user we want do save
+     */
     @Override
     public void saveUser(User user) {
         Session session = new HibernateUtils().getSessionFactory().openSession();
@@ -23,6 +28,11 @@ public class UserDAOImpl implements UserDAO {
         session.close();
     }
 
+    /**
+     * get user from database by id
+     * @param id of user we want to get
+     * @return
+     */
     @Override
     public User getUser(int id) {
         Session session = new HibernateUtils().getSessionFactory().openSession();
@@ -40,6 +50,11 @@ public class UserDAOImpl implements UserDAO {
         }
     }
 
+    /**
+     * get user from database by email
+     * @param email of user we want
+     * @return
+     */
     @Override
     public User getUserByEmail(String email) {
         Session session = new HibernateUtils().getSessionFactory().openSession();
@@ -61,6 +76,10 @@ public class UserDAOImpl implements UserDAO {
         }
     }
 
+    /**
+     * updating user in database
+     * @param user we want to update
+     */
     @Override
     public void updateUser(User user) {
         Session session = new HibernateUtils().getSessionFactory().openSession();
@@ -70,6 +89,10 @@ public class UserDAOImpl implements UserDAO {
         session.getTransaction().commit();
     }
 
+    /**
+     * delete user from database by id
+     * @param id of user we want to delete
+     */
     @Override
     public void deleteUser(int id) {
         Session session = new HibernateUtils().getSessionFactory().openSession();
@@ -81,6 +104,10 @@ public class UserDAOImpl implements UserDAO {
         session.close();
     }
 
+    /**
+     * geting all users from database
+     * @return list of all users in databse
+     */
     @Override
     public List<User> getAllUsers() {
         Session session = new HibernateUtils().getSessionFactory().openSession();
@@ -91,6 +118,11 @@ public class UserDAOImpl implements UserDAO {
         return users;
     }
 
+    /**
+     * get user designation by email
+     * @param email of user we want to get his designation
+     * @return designation
+     */
     public static String getDesignation(String email) {
         UserDAO userDAO = new UserDAOImpl();
         return userDAO.getUserByEmail(email).getDesignation();

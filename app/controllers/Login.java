@@ -17,6 +17,10 @@ import static play.data.Form.form;
  */
 public class Login extends Controller {
 
+    /**
+     *
+     * @return login page
+     */
     public static Result renderLogin() {
         if (!session().isEmpty()) {
             return Login.logout();
@@ -25,6 +29,11 @@ public class Login extends Controller {
 
     }
 
+    /**
+     * authenticate if the entered user is in the database
+     * @return if YES the user will be redirected to the main page
+     *         if NO the user stays on this page oan has to ester  correct email and username
+     */
     public static Result authenticate() {
 
         Form<LoginForm> loginForm = form(LoginForm.class).bindFromRequest();
@@ -49,17 +58,12 @@ public class Login extends Controller {
             System.out.println("Login ERROR!");
             return badRequest(login.render(loginForm));
         }
-
-        /*User user = Form.form(User.class).bindFromRequest().get();
-         List<User> allUsers = new Model.Finder(String.class, User.class).all();
-         for(User u : allUsers){
-         if((u.getUsername() == user.getUsername()) || (u.getPassword() == user.getPassword())){
-         return ok(index.render("Wasgood."));
-         }
-         }
-         */
     }
 
+    /**
+     *
+     * @return logout page
+     */
     public static Result logout() {
         session().clear();
         System.out.println("User has been logged out");
