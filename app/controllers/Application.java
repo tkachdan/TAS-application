@@ -146,7 +146,11 @@ public class Application extends Controller {
             for (Poi poi : POIsInTrip)
                 str += "id: " + poi.getId() + " name: " + poi.getName() + "<br>";
             str += "</td>" + "<td>" + trip.getCost() + "</td>" + "<td>" + trip.getTripStatus() + "</td>";
-            str += "<td> <a href=\"/payTrip?id=" + trip.getId() + " \"   >pay for trip id = " + trip.getId() + "</a></td>";
+            if (trip.getTripStatus() == TripStatus.PAID) {
+                str += "<td>You've already paid for this trip!</td>";
+            } else {
+                str += "<td> <a href=\"/payTrip?id=" + trip.getId() + " \"   >Pay for trip</a></td>";
+            }
             str += " <td> <input type=\"checkbox\" id=" + trip.getId() + " name=ToDel\"" + trip.getId() + "\" value=\"checked\" /> </td>";
 
 
@@ -175,7 +179,7 @@ public class Application extends Controller {
             i++;
         }
 
-        str += "<h4>total cost is " + trip.getCost() + "</h4>";
+        str += "<h4>Total cost: <i>" + trip.getCost() + "</i></h4>";
 
         return ok(payTrip.render(str, String.valueOf(trip.getId())));
     }

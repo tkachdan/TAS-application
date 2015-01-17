@@ -74,4 +74,8 @@ public class TripServiceImpl implements TripService {
         tripDAO.saveTrip(newTrip);
         return newTrip;
     }
+
+    public Trip getTripById(int id) {
+        return tripDAO.getTrip(id);
+    }
 }
