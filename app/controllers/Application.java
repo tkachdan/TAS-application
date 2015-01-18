@@ -149,11 +149,12 @@ public class Application extends Controller {
             if (trip.getTripStatus() == TripStatus.PAID) {
                 str += "<td>You've already paid for this trip!</td>";
             } else {
-                str += "<td> <a href=\"/payTrip?id=" + trip.getId() + " \"   >Pay for trip</a></td>";
+                if (trip.getCost() == 0) {
+                    str += "<td>Trip is free, nothing to pay</td>";
+                } else {
+                    str += "<td> <a href=\"/payTrip?id=" + trip.getId() + " \"   >Pay for trip</a></td>";
+                }
             }
-            str += " <td> <input type=\"checkbox\" id=" + trip.getId() + " name=ToDel\"" + trip.getId() + "\" value=\"checked\" /> </td>";
-
-
             str += "</tr>";
         }
 
@@ -179,7 +180,7 @@ public class Application extends Controller {
             i++;
         }
 
-        str += "<h4>Total cost: <i>" + trip.getCost() + "</i></h4>";
+        str += "<p>Total cost: <i>" + trip.getCost() + "</i></p>";
 
         return ok(payTrip.render(str, String.valueOf(trip.getId())));
     }
