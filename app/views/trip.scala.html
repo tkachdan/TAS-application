@@ -1,5 +1,6 @@
 @import com.fasterxml.jackson.databind.JsonNode
-@(message: String)(cord: JsonNode)
+@(message: String)(cord: JsonNode)(poiString: String)
+
 
 @main("Trip") {
     <p id="cord" class="invisible">@cord</p>
@@ -28,6 +29,12 @@
         </table>
     </div>
     <br>
+
+    <form role="form" action="@routes.Application.renderCart()" method="get" id="input-form-edit">
+        <input type="hidden" name="pois_to_trip" value="@poiString">
+        <button type="submit" class="btn btn-primary">Add to cart</button>
+    </form>
+
     <!-- Map support goes here -->
     <!-- logic goes in /js/loadMap.js -->
 

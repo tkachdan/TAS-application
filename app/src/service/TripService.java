@@ -12,4 +12,6 @@ public interface TripService {
     public void addPoi(Trip trip, Poi poi);
 
     public void changeTripStatus(Trip trip, TripStatus tripStatus);
+
+    public Trip createTripFromPoisString(String poisString);
 }

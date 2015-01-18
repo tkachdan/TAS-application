@@ -24,8 +24,8 @@ public class Poi {
     }
 
     public Poi(Boolean accesibility, Integer minimalAge, String name, Double rating,
-            Time requiredTime, PoiType type, Integer cost,
-            Double latitude, Double longtitude) {
+               Time requiredTime, PoiType type, Integer cost,
+               Double latitude, Double longtitude) {
         this.accesibility = accesibility;
         this.minimalAge = minimalAge;
         this.name = name;

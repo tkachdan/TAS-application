@@ -7,20 +7,32 @@ import play.libs.Json;
 import play.mvc.Controller;
 import play.mvc.Result;
 import src.persistence.dao.PoiDAO;
+import src.persistence.dao.TripDAO;
+import src.persistence.dao.UserDAO;
 import src.persistence.dao.impl.PoiDAOImpl;
-import src.persistence.models.Poi;
-import src.persistence.models.PoiType;
+import src.persistence.dao.impl.TripDAOImpl;
+import src.persistence.dao.impl.UserDAOImpl;
+import src.persistence.models.*;
 import src.service.PoiService;
+import src.service.TripService;
 import src.service.impl.PoiServiceImpl;
+import src.service.impl.TripServiceImpl;
 import views.html.*;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import static play.data.Form.form;
 
 public class Application extends Controller {
+
+    private static PoiDAOImpl poiDAO = new PoiDAOImpl();
+    private static UserDAO userDAO = new UserDAOImpl();
+    private static TripService tripService = new TripServiceImpl();
+    private static TripDAO tripDAO= new TripDAOImpl();
+
     /**
      * rendering index page
      *
@@ -47,7 +59,6 @@ public class Application extends Controller {
         List<PoiType> types = new ArrayList<>();
         int minimalAge = 0;
         int maximalCost = 0;
-
 
 
         for (Map.Entry<String, String> entry : data.entrySet()) {
@@ -101,6 +112,11 @@ public class Application extends Controller {
         return ok(indexLogined.render(str));
     }
 
+    /**
+     * rendering google map with users path between POIs and with detailed description of the path
+     *
+     * @return page with list of choosen pois , google map with path description
+     */
     public static Result renderTrip() {
         if (session().isEmpty()) {
             return ok(login.render(form(Login.LoginForm.class)));
@@ -146,6 +162,7 @@ public class Application extends Controller {
         JsonNode json = Json.toJson(coordList);
         return ok(trip.render(str, json, poisString));
     }
+
     public static Result renderCart() {
         if (session().isEmpty()) {
             return ok(login.render(form(Login.LoginForm.class)));
@@ -234,7 +251,9 @@ public class Application extends Controller {
         return ok(paymentIsOk.render(str));
     }
 
-
+    /**
+     * @return page with advertisement
+     */
     public static Result renderAdd() {
         return ok(add.render());
     }
@@ -264,5 +283,4 @@ public class Application extends Controller {
             this.lat = lat;
         }
     }
-
 }
