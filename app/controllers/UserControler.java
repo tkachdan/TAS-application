@@ -6,7 +6,12 @@ import play.mvc.Result;
 import src.persistence.dao.UserDAO;
 import src.persistence.dao.impl.UserDAOImpl;
 import src.persistence.models.User;
+import src.service.impl.UserServiceImpl;
+import views.html.userlist;
 import views.html.user;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import static play.data.Form.form;
 
@@ -32,6 +37,34 @@ public class UserControler extends Controller {
         }
         err = "";
         return ok(user.render(form(UserForm.class)));
+
+    }
+
+    public static Result renderUserlist() {
+        if (session().isEmpty()) {
+            return controllers.Login.renderLogin();
+        }
+        if (!session().get("designation").equals("Administrator")) {
+            return Application.renderIndexLogined();
+        }
+
+        UserServiceImpl userService = new UserServiceImpl();
+        List<User> userList = new ArrayList<>();
+        userList = userService.getAllUsers();
+        String str = "";
+
+        for (User u : userList) {
+            str += "<tr>";
+            str += " <td> <input type=\"radio\" id=\"id\" name=\"id\" value=\""+ u.getUserId() +"\" /> </td>";
+            str += "<td>" + u.getUserId() + "</td> <td>" + u.getUsername() + "</td> <td>" + u.getEmail() + "</td> <td>"
+                    + u.getFirstName() + "</td> <td>"
+                    + u.getLastName() + "</td> <td>"
+                    + u.getDesignation() + "</td>";
+            str += "</tr>";
+        }
+
+        err = "";
+        return ok(userlist.render(str,form(UserForm.class)));
 
     }
 
@@ -203,6 +236,7 @@ public class UserControler extends Controller {
             this.username = "";
             this.id = "";
         }
+
 
         public void clean() {
             this.designation = "Administrator";

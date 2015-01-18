@@ -29,6 +29,10 @@ GET         /user                 controllers.UserControler.renderUser()
 
 POST        /user                 controllers.UserControler.editUser()
 
+GET         /userlist             controllers.UserControler.renderUserlist()
+
+POST        /userlist             controllers.UserControler.renderUserlist()
+
 GET         /createPoi            controllers.PoiController.renderCreatePoi()
 
 POST        /createPoi            controllers.PoiController.createPoi()

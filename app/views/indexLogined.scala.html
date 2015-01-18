@@ -22,22 +22,25 @@
                         </li>
                     </ul>
 
+                    <ul class="nav navbar-nav">
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" style="display : @Buttons.adminButton()" data-toggle="dropdown" role="button" aria-expanded="false">
+                                USER options <span class="caret"></span></a>
+                            <ul class="dropdown-menu" role="menu">
+                                <li role="presentation"><a role="menuitem" tabindex="-1" href="/user">Edit</a></li>
+                                <li role="presentation"><a role="menuitem" tabindex="-1" href="/userlist">List</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+
                     <ul class="nav navbar-nav navbar-right">
                         <a class="button" href="@routes.Login.logout()">
-                            <button type="button" class="btn btn-primary">Logout</button>
+                            <button type="button" >Logout</button>
                         </a>
                     </ul>
                 </div><!-- /.navbar-collapse -->
             </div><!-- /.container-fluid -->
         </nav>
-
-        <div class="btn-block">
-
-            <a class="button" style="display : @Buttons.adminButton()" href="/user">
-                <button type="button" class="btn btn-primary">USERs edit</button>
-            </a>
-            <br>
-        </div>
 
         <h2>Choose places you'd like to visit:</h2>
 
