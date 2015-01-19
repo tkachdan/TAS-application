@@ -2,21 +2,24 @@
 
 
 @main("authenticate") {
-
-    <h1>Sing in</h1>
-    <br>
-
-
-    <form role="form" action="@routes.Login.authenticate()" method="post" id="input-form-edit">
-        <div class="form-group">
-            <label for="id">Email:</label>
-            <input type="text" class="form-control" name="email" id="email">
-        </div>
-        <div class="form-group">
-            <label for="name">Password:</label>
-            <input type="password" class="form-control" id="password" name="password">
-        </div>
-        <button type="submit" class="btn btn-primary">Log in</button>
-    </form>
+    <section class="login-page">
+        <h1>Sing in</h1>
+        <form
+        class = "login-form"
+        role="form"
+        action="@routes.Login.authenticate()"
+        method="post"
+        id="input-form-edit">
+            <fieldset class="form-group">
+                <label for="login-email">Email:</label>
+                <input required="required" autofocus="autofocus" type="email" class="form-control" name="email" id="login-email">
+            </fieldset>
+            <fieldset class="form-group">
+                <label for="login-password">Password:</label>
+                <input required="required" type="password" class="form-control" id="login-password" name="password">
+            </fieldset>
+            <button type="submit" class="btn btn-primary">Log in</button>
+        </form>
+    </section>
 }
 

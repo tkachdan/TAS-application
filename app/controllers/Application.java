@@ -66,6 +66,9 @@ public class Application extends Controller {
         }
     }
 
+
+
+
     public static Result renderTrip() {
         if (session().isEmpty()) {
             return ok(login.render(form(Login.LoginForm.class)));
@@ -82,6 +85,8 @@ public class Application extends Controller {
         }
         String str = "";
         List<Coordinates> coordList = new ArrayList<>();
+        List<String> trip_array = new ArrayList<>();
+        String string_trip = "";
         for (Poi p : poiList) {
             Coordinates c = new Coordinates();
             c.lat = p.getLatitude();
@@ -93,10 +98,14 @@ public class Application extends Controller {
             str += "<td>" + p.getId() + "</td> <td>" + p.getName() + "</td> <td>" + p.getType() + "</td> <td>"
                     + p.getCost() + "</td>";
             str += "</tr>";
+
+            trip_array.add(p.getName());
         }
 
+        string_trip = String.join(" - ", trip_array);
+
         JsonNode json = Json.toJson(coordList);
-        return ok(trip.render(str, json));
+        return ok(trip.render(str, json, string_trip));
     }
 
     public static Result renderAdd() {

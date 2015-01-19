@@ -8,6 +8,7 @@ import src.persistence.dao.impl.UserDAOImpl;
 import src.persistence.models.User;
 import views.html.user;
 
+
 import static play.data.Form.form;
 
 /**
@@ -17,6 +18,7 @@ public class UserControler extends Controller {
 
     private static String err = "";
     public static UserForm mem = new UserForm();
+
 
     public static Result renderUser() {
         if (session().isEmpty()) {
@@ -83,6 +85,7 @@ public class UserControler extends Controller {
 
     private static Result ActionAdd(UserForm form) {
         UserDAO dao = new UserDAOImpl();
+
         User us = new User(form.designation, form.email, form.firstname, form.lastname, form.password, form.username);
         dao.saveUser(us);
         mem.designation = form.designation;
@@ -199,6 +202,7 @@ public class UserControler extends Controller {
         }
     }
 
+
     public static String getButErr() {
         if (err.isEmpty()) {
             return "none";
@@ -214,5 +218,6 @@ public class UserControler extends Controller {
     public static UserForm getUF() {
         return mem;
     }
+
 
 }

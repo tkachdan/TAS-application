@@ -1,5 +1,6 @@
 @import com.fasterxml.jackson.databind.JsonNode
-@(message: String)(cord: JsonNode)
+@(message: String)(cord: JsonNode)(road: String)
+
 
 @main("Trip") {
     <p id="cord" class="invisible">@cord</p>
@@ -27,7 +28,20 @@
             </tbody>
         </table>
     </div>
-    <br>
+
+    <section class="social">
+        <nav class="share">
+            <h3>Share your trip in:</h3>
+            <a target="_blank" href="https://twitter.com/intent/tweet?text=I will travel @road. Join me with TAS!&amp;url=http://example.com/">
+                Twitter</a>
+            <a target="_blank" href="http://www.facebook.com/sharer.php?u=http://example.com/">Facebook</a>
+            <a target="_blank" href="https://plus.google.com/share?url=http://example.com/">Google+</a>
+        </nav>
+        <nav class="print">
+            <h3>To print your trip:</h3>
+            <a href="javascript:window.print();">click here</a>
+        </nav>
+    </section>
 
 
 

@@ -63,7 +63,8 @@ public class Login extends Controller {
     public static Result logout() {
         session().clear();
         System.out.println("User has been logged out");
-        return ok(logout.render("index"));
+        //return ok(logout.render("index"));
+        return controllers.Login.renderLogin();
     }
 
     public static class LoginForm {

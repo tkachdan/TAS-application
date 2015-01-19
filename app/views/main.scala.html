@@ -2,7 +2,7 @@
 
 <!DOCTYPE html>
 
-<html>
+<html lang="en">
     <head>
         <title>@title</title>
 
@@ -19,20 +19,28 @@
     </head>
     <body>
         <div class="container">
-            <div class="container">
+
+            <header class="container">
                 <div class="page-header disabled">
+                    @if(!session().isEmpty()) {
+
+                        <nav>
+                            <a href="/logout">Logout</a>
+                        </nav>
+
+                    }
 
                         <span class="glyphicon glyphicon-plane" aria-hidden="true"></span>
                         Travel agency application (TAS)
 
                 </div>
-            </div>
+            </header>
 
             @content
 
-            <div class="container">
-                <div class="modal-footer">Footer (c)FEL CVUT 2014</div>
-            </div>
+            <footer class="container">
+                <div class="modal-footer">&copy;FEL CVUT 2014</div>
+            </footer>
         </div>
     </body>
 </html>
