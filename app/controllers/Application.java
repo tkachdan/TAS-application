@@ -86,12 +86,18 @@ public class Application extends Controller {
 
         Map<String, String> data = Form.form().bindFromRequest().data();
         List<Poi> poiList = new ArrayList<>();
+        String isButtonNeeded = "false";
         for (Map.Entry<String, String> entry : data.entrySet()) {
-            int id = Integer.parseInt(entry.getKey());
-            Poi poi = poiDAO.getPoi(Integer.parseInt(entry.getKey()));
-            poiList.add(poi);
-            poisString += poi.getId() + "-";
-            Logger.info(poi.getName());
+            if (entry.getKey() == "novalue") {
+                /*if (entry.getValue() == "true")
+                    isButtonNeeded = "true";*/
+            } else {
+                int id = Integer.parseInt(entry.getKey());
+                Poi poi = poiDAO.getPoi(Integer.parseInt(entry.getKey()));
+                poiList.add(poi);
+                poisString += poi.getId() + "-";
+                Logger.info(poi.getName());
+            }
         }
         if (poisString.length() > 1)
             poisString = poisString.substring(0, poisString.length() - 1);
@@ -116,7 +122,7 @@ public class Application extends Controller {
         return ok(trip.render(str, json, poisString));
     }
 
-    public static Result renderCart() {
+    public static Result renderCart() throws Exception {
         if (session().isEmpty()) {
             return ok(login.render(form(Login.LoginForm.class)));
         }
@@ -143,18 +149,23 @@ public class Application extends Controller {
             Set<Poi> POIsInTrip = trip.getPois();
             str += "<tr>";
             str += "<td>" + trip.getId() + "</td>" + "<td>";
-            for (Poi poi : POIsInTrip)
+
+            String poisChecked = "";
+            for (Poi poi : POIsInTrip) {
                 str += "id: " + poi.getId() + " name: " + poi.getName() + "<br>";
-            str += "</td>" + "<td>" + trip.getCost() + "</td>" + "<td>" + trip.getTripStatus() + "</td>";
-            if (trip.getTripStatus() == TripStatus.PAID) {
-                str += "<td>You've already paid for this trip!</td>";
-            } else {
-                if (trip.getCost() == 0) {
-                    str += "<td>Trip is free, nothing to pay</td>";
-                } else {
-                    str += "<td> <a href=\"/payTrip?id=" + trip.getId() + " \"   >Pay for trip</a></td>";
-                }
+                poisChecked += poi.getId() + "=checked&";
             }
+            poisChecked = poisChecked.substring(0, poisChecked.length() - 1);
+
+            str += "</td>" + "<td>" + trip.getCost() + "</td>" + "<td>" + trip.getTripStatus() + "</td>";
+            if (trip.getTripStatus() == TripStatus.PAID || trip.getCost() == 0) {
+                String pathToPdf = String.valueOf(trip.getId()) + ".pdf";
+                tripService.printTripDataToPdf(trip, "/Applications/MAMP/htdocs/TAS/", pathToPdf);
+                str += "<td><a href=\"http://localhost:8888/TAS/" + pathToPdf + "\">Get trip overview</a></td>";
+            } else {
+                str += "<td> <a href=\"/payTrip?id=" + trip.getId() + " \"   >Pay for trip</a></td>";
+            }
+
             str += "</tr>";
         }
 
