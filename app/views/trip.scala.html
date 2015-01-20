@@ -1,5 +1,5 @@
 @import com.fasterxml.jackson.databind.JsonNode
-@(message: String)(cord: JsonNode)(poiString: String)
+@(message: String)(cord: JsonNode)(poiString: String)(deleted: String)
 
 
 @main("Trip") {
@@ -12,28 +12,79 @@
 
     <h1>Trip overview</h1>
     <h2>You trip contains:</h2>
+    <form role="form" action="@routes.Application.renderCart()" method="get">
+        <div class="table-view " style="max-width : 70 %">
+            <table class="table table-bordered" id="table">
+                <thead>
+                    <tr>
+                        <th></th>
+                        <th>Id</th>
+                        <th>Name</th>
+                        <th>Type</th>
+                        <th>Cost</th>
+                    </tr>
+                </thead>
+                <tbody>
+                @Html(message)
+                </tbody>
+            </table>
+        </div>
+        <br>
 
-    <div class="table-view " style="max-width : 70 %">
-        <table class="table table-bordered">
-            <thead>
-                <tr>
-                    <th>Id</th>
-                    <th>Name</th>
-                    <th>Type</th>
-                    <th>Cost</th>
-                </tr>
-            </thead>
-            <tbody>
-            @Html(message)
-            </tbody>
-        </table>
-    </div>
-    <br>
-
-    <form role="form" action="@routes.Application.renderCart()" method="get" id="input-form-edit">
         <input type="hidden" name="pois_to_trip" value="@poiString">
-        <button type="submit" class="btn btn-primary">Add to cart</button>
+        <button type="submit" id="button" name="button" value="add" class="btn btn-primary">
+            Add to cart</button>
+        <button type="submit" id="button" name="button" value="remove" class="btn btn-primary">
+            Remove</button>
+        @*<button type="submit" id="button" name="button" value="return" class="btn btn-primary">*@
+            @*Add back</button>*@
     </form>
+
+    <a class="button" href="/index-logined">
+        <button type="button" class="btn btn-primary" >Back</button>
+    </a>
+
+
+    <script>
+    $ ( "#table tr" ).click ( function ( ) {
+    if ( document.getElementById ( ( $ ( this ).index ( ) + 1 ) ).checked == true ) {
+    document.getElementById ( ( $ ( this ).index ( ) + 1 ) ).checked = false ;
+    } else {
+    document.getElementById ( ( $ ( this ).index ( ) + 1 ) ).checked = true ;
+    }
+    } ) ;
+    </script>
+
+    <form role="form" action="@routes.Application.renderCart()" method="get">
+        <div class="table-view " style="max-width : 70 %">
+            <table class="table table-bordered" id="table_deleted">
+                <thead>
+                    <tr>
+                        <th></th>
+                        <th>Id</th>
+                        <th>Name</th>
+                        <th>Type</th>
+                        <th>Cost</th>
+                    </tr>
+                </thead>
+                <tbody>
+                @Html(deleted)
+                </tbody>
+            </table>
+        </div>
+        <input type="hidden" name="pois_to_trip" value="@deleted">
+    </form>
+
+
+    <script>
+    $ ( "#table_deleted tr" ).click ( function ( ) {
+    if ( document.getElementById ( ( $ ( this ).index ( ) + 1 ) ).checked == true ) {
+    document.getElementById ( ( $ ( this ).index ( ) + 1 ) ).checked = false ;
+    } else {
+    document.getElementById ( ( $ ( this ).index ( ) + 1 ) ).checked = true ;
+    }
+    } ) ;
+    </script>
 
     <!-- Map support goes here -->
     <!-- logic goes in /js/loadMap.js -->
@@ -45,5 +96,4 @@
         <div id="directionsPanel" style="float : right ; width : 30 % ; height 100 %">
             <p>Total Distance: <span id="total"></span></p>
         </div>
-
 }

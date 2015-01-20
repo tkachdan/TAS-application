@@ -88,7 +88,6 @@
             }
             </script>
 
-
             <br/>
             <br/>
             <input type="submit" class="btn btn-primary">
@@ -96,7 +95,7 @@
 
         <form id="checkboxes-poi-form" action="@routes.Application.renderTrip()" method="get" >
             <div>
-                <table class="table" >
+                <table class="table" id="table" >
                     <thead>
                         <tr>
                             <th></th>
@@ -114,5 +113,14 @@
             <br>
             <input type="submit" class="btn btn-primary">
         </form>
-    }
 
+    <script>
+    $ ( "#table tr" ).click ( function ( ) {
+    if ( document.getElementById ( ( $ ( this ).index ( ) + 1 ) ).checked == true ) {
+    document.getElementById ( ( $ ( this ).index ( ) + 1 ) ).checked = false ;
+    } else {
+    document.getElementById ( ( $ ( this ).index ( ) + 1 ) ).checked = true ;
+    }
+    } ) ;
+    </script>
+    }
