@@ -1,17 +1,22 @@
 @(message: String)(tripId: String)
 @main("Payment") {
-    <h1>Payment for trip</h1>
+    <a href="/cart">< Back to cart</a>
+    <h1 style="">Payment for trip</h1>
+    <div style="clear : both ; height : 0 px ;"></div>
+    <div style="width : 50 % ; border : 0 px solid ; float : left">
     @Html(message)
+    </div>
 
-    <div class="form-group">
+    <div class="form-group" style="width : 50 % ; border : 0 px solid ; float : left">
         <form role="form" action="/paymentIsOk" method="GET">
-            <input class="form-control" style="width : 330 px ;" type="text" value="your card data" name="cardData"><br>
-            <input class="form-control" style="width : 330 px ;" type="text" value="CVV" name="cardCVV"><br>
-            <input class="form-control" style="width : 330 px ;" type="text" value="expired" name="cardExpired"><br>
+            <input class="form-control" style="width : 330 px ;" type="text" placeholder="Card number" name="cardData"><br>
+            <input class="form-control" style="width : 330 px ;" type="text" placeholder="CVV" name="cardCVV"><br>
+            <input class="form-control" style="width : 330 px ;" type="text" placeholder="Expired MM/YY" name="cardExpired"><br>
             <input type="hidden" value="@Html(tripId)" name="tripId">
 
             <input class="btn btn-primary" type="submit" value="Pay" style="margin-top : 15 px ;">
 
         </form>
     </div>
+    <div style="clear : both ;"></div>
 }
