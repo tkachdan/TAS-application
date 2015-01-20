@@ -189,6 +189,7 @@ public class Application extends Controller {
         for (Trip trip : userTrips) {
             Set<Poi> POIsInTrip = trip.getPois();
             str += "<tr>";
+            
             str += "<td>" + trip.getId() + "</td>" + "<td>";
             for (Poi poi : POIsInTrip)
                 str += "id: " + poi.getId() + " name: " + poi.getName() + "<br>";
@@ -225,6 +226,7 @@ public class Application extends Controller {
             str += "<p>" + i + ". POI — " + poi.getName() + "</p>";
             i++;
         }
+
 
         str += "<h4>Total cost: <i>" + trip.getCost() + "</i></h4>";
 
