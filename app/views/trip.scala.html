@@ -35,12 +35,21 @@
         <button type="submit" id="button" name="button" value="remove" class="btn btn-primary">
             Remove</button>
         @*<button type="submit" id="button" name="button" value="return" class="btn btn-primary">*@
-            @*Add back</button>*@
+        @*Add back</button>*@
+        <button type="button" class="btn btn-primary" onclick="goBack ()" >Add Back</button>
+
     </form>
-        
+
     <a class="button" href="/index-logined">
         <button type="button" class="btn btn-primary" >Back</button>
     </a>
+
+
+    <script>
+    function goBack () {
+    window.history.back ( )
+    }
+    </script>
 
 
     <script>

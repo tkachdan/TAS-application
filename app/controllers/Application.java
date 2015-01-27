@@ -6,14 +6,10 @@ import play.data.Form;
 import play.libs.Json;
 import play.mvc.Controller;
 import play.mvc.Result;
-import src.persistence.dao.TripDAO;
-import src.persistence.dao.UserDAO;
-import src.persistence.dao.impl.PoiDAOImpl;
 import src.persistence.dao.impl.TripDAOImpl;
 import src.persistence.dao.impl.UserDAOImpl;
 import src.persistence.models.*;
 import src.service.PoiService;
-import src.service.TripService;
 import src.service.impl.PoiServiceImpl;
 import src.service.impl.TripServiceImpl;
 import src.service.impl.UserServiceImpl;
@@ -109,6 +105,23 @@ public class Application extends Controller {
         return ok(indexLogined.render(str));
     }
 
+    private static Result returnDefaultIndexLogined() {
+
+        List<Poi> poiList = new ArrayList<>();
+        poiList.addAll(poiService.getAllPois());
+        String str = "";
+        int checkboxId = 1;
+        for (Poi p : poiList) {
+            str += "<tr>";
+            str += " <td> <input type=\"checkbox\" id=" + checkboxId + " name=\"" + p.getId() + "\" value=\"checked\" /> </td>";
+            str += "<td>" + p.getId() + "</td> <td>" + p.getName() + "</td> <td>" + p.getType() + "</td> <td>"
+                    + p.getCost() + "</td>";
+            str += "</tr>";
+            checkboxId++;
+        }
+        return ok(indexLogined.render(str));
+    }
+
     public static Result renderTrip() {
         if (session().isEmpty()) {
             return ok(login.render(form(Login.LoginForm.class)));
@@ -133,8 +146,7 @@ public class Application extends Controller {
             Logger.info(poi.getName());
             poiNumber++;
         }
-        
-        
+
         if (poiNumber < 2) {
             return returnDefaultIndexLogined();
         }
@@ -168,15 +180,8 @@ public class Application extends Controller {
         string_trip = String.join(" - ", trip_array);
 
         JsonNode json = Json.toJson(coordList);
-        return ok(trip.render(str, json, poisString,""));
+        return ok(trip.render(str, json, poisString, "", string_trip));
     }
-
-//    private static Result editTrip(){
-//        if (session().isEmpty()) {
-//            return ok(login.render(form(Login.LoginForm.class)));
-//        }
-//    }
-
 
     public static Result renderCart() throws Exception {
         if (session().isEmpty()) {
@@ -185,19 +190,14 @@ public class Application extends Controller {
 
         Map<String, String> data = Form.form().bindFromRequest().data();
         String poisString = "";
-        String originalPois = "";
         LinkedList<String> poisToDelete = new LinkedList<>();
         String poiId = "";
         boolean edit = false;
-        boolean back = false;
         for (Map.Entry<String, String> entry : data.entrySet()) {
             System.out.println(entry);
             if (entry.getKey().equals("button")) {
                 if (entry.getValue().equals("remove")) {
                     edit = true;
-                }
-                if (entry.getValue().equals("return")) {
-                    back = true;
                 }
             }
             poisString = entry.getValue();
@@ -209,19 +209,11 @@ public class Application extends Controller {
             }
         }
 
-//        if (!poisToDelete.isEmpty()) {
-//            String a = poisToDelete.getLast().substring(0, poisToDelete.getLast().length() - 1);
-//            poisToDelete.removeLast();
-//            poisToDelete.add(a);
-//        }
-
         if (edit) {
 
             List<Coordinates> coordList = new ArrayList<>();
             String str = "";
             int checkBoxId = 1;
-
-            originalPois = new String(poisString);
 
             String deletedPois = "";
             for (String s : poisToDelete) {
@@ -237,9 +229,9 @@ public class Application extends Controller {
             }
             System.out.println("poiStr : \"" + poisString + "\"");
 
-            if (deletedPois.equals(poisString) || poisString == "") {
+            if (deletedPois.equals(poisString) || poisString == "" || deletedPois.isEmpty()) {
 
-                for (Poi p : poiService.getPoisFromString(originalPois)) {
+                for (Poi p : poiService.getPoisFromString(poisString)) {
                     Coordinates c = new Coordinates();
                     c.lat = p.getLatitude();
                     c.lon = p.getLongtitude();
@@ -254,11 +246,9 @@ public class Application extends Controller {
                     checkBoxId++;
                 }
 
-                System.out.println("CANNOT REMOVE ALL");
                 JsonNode json = Json.toJson(coordList);
-                return badRequest(trip.render(str, json, poisString,""));
+                return badRequest(trip.render(str, json, poisString, "", ""));
             }
-
             if (!poisToDelete.isEmpty()) {
                 String a = poisToDelete.getLast().substring(0, poisToDelete.getLast().length() - 1);
                 a += "-";
@@ -283,15 +273,8 @@ public class Application extends Controller {
 
             JsonNode json = Json.toJson(coordList);
 
-
             String str2 = "";
             for (Poi p : poiService.getPoisFromString(deletedPois)) {
-                Coordinates c = new Coordinates();
-                //          c.lat = p.getLatitude();
-                //        c.lon = p.getLongtitude();
-
-                //         coordList.add(c);
-
                 str2 += "<tr>";
                 str2 += " <td> <input type=\"checkbox\" id=" + checkBoxId + " name=\"" + p.getId() + "\" value=\"checked\" /> </td>";
                 str2 += "<td>" + p.getId() + "</td> <td>" + p.getName() + "</td> <td>" + p.getType() + "</td> <td>"
@@ -300,111 +283,10 @@ public class Application extends Controller {
                 checkBoxId++;
             }
 
-            return ok(trip.render(str, json, poisString,str2));
+            return ok(trip.render(str, json, poisString, str2, ""));
         }
 
- //        if (!poisToDelete.isEmpty()) {
-//            String a = poisToDelete.getLast().substring(0, poisToDelete.getLast().length() - 1);
-//            poisToDelete.removeLast();
-//            poisToDelete.add(a);
-//        }
-
-        if (edit) {
-
-            List<Coordinates> coordList = new ArrayList<>();
-            String str = "";
-            int checkBoxId = 1;
-
-            originalPois = new String(poisString);
-
-            String deletedPois = "";
-            for (String s : poisToDelete) {
-                System.out.println(s);
-                deletedPois += s;
-            }
-
-            System.out.println("poiStr : \"" + poisString + "\"");
-
-            for (String s : poisToDelete) {
-                System.out.println("replacing with: " + s);
-                poisString = poisString.replace(s, "");
-            }
-            System.out.println("poiStr : \"" + poisString + "\"");
-
-            if (deletedPois.equals(poisString) || poisString == "") {
-
-                for (Poi p : poiService.getPoisFromString(originalPois)) {
-                    Coordinates c = new Coordinates();
-                    c.lat = p.getLatitude();
-                    c.lon = p.getLongtitude();
-
-                    coordList.add(c);
-
-                    str += "<tr>";
-                    str += " <td> <input type=\"checkbox\" id=" + checkBoxId + " name=\"" + p.getId() + "\" value=\"checked\" /> </td>";
-                    str += "<td>" + p.getId() + "</td> <td>" + p.getName() + "</td> <td>" + p.getType() + "</td> <td>"
-                            + p.getCost() + "</td>";
-                    str += "</tr>";
-                    checkBoxId++;
-                }
-
-                System.out.println("CANNOT REMOVE ALL");
-                JsonNode json = Json.toJson(coordList);
-                return badRequest(trip.render(str, json, poisString,""));
-            }
-
-            if (!poisToDelete.isEmpty()) {
-                String a = poisToDelete.getLast().substring(0, poisToDelete.getLast().length() - 1);
-                a += "-";
-                poisToDelete.removeLast();
-                poisToDelete.add(a);
-            }
-
-            for (Poi p : poiService.getPoisFromString(poisString)) {
-                Coordinates c = new Coordinates();
-                c.lat = p.getLatitude();
-                c.lon = p.getLongtitude();
-
-                coordList.add(c);
-
-                str += "<tr>";
-                str += " <td> <input type=\"checkbox\" id=" + checkBoxId + " name=\"" + p.getId() + "\" value=\"checked\" /> </td>";
-                str += "<td>" + p.getId() + "</td> <td>" + p.getName() + "</td> <td>" + p.getType() + "</td> <td>"
-                        + p.getCost() + "</td>";
-                str += "</tr>";
-                checkBoxId++;
-            }
-
-            JsonNode json = Json.toJson(coordList);
-
-
-            String str2 = "";
-            for (Poi p : poiService.getPoisFromString(deletedPois)) {
-                Coordinates c = new Coordinates();
-      //          c.lat = p.getLatitude();
-        //        c.lon = p.getLongtitude();
-
-       //         coordList.add(c);
-
-                str2 += "<tr>";
-                str2 += " <td> <input type=\"checkbox\" id=" + checkBoxId + " name=\"" + p.getId() + "\" value=\"checked\" /> </td>";
-                str2 += "<td>" + p.getId() + "</td> <td>" + p.getName() + "</td> <td>" + p.getType() + "</td> <td>"
-                        + p.getCost() + "</td>";
-                str2 += "</tr>";
-                checkBoxId++;
-            }
-
-            return ok(trip.render(str, json, poisString,str2));
-        }
-
-
-        if (back) {
-
-        }
-
-
-
-       User user = userDAO.getUserByEmail(session().get("email"));
+        User user = userDAO.getUserByEmail(session().get("email"));
 
         if (poisString.length() > 0) {
             Trip newTrip = tripService.createTripFromPoisString(poisString);
@@ -426,17 +308,13 @@ public class Application extends Controller {
                 str += "id: " + poi.getId() + " name: " + poi.getName() + "<br>";
                 poisChecked += poi.getId() + "=checked&";
             }
-            poisChecked = poisChecked.substring(0, poisChecked.length() - 1);
-
             str += "</td>" + "<td>" + trip.getCost() + "</td>" + "<td>" + trip.getTripStatus() + "</td>";
             if (trip.getTripStatus() == TripStatus.PAID || trip.getCost() == 0) {
                 String pathToPdf = String.valueOf(trip.getId()) + ".pdf";
-                tripService.printTripDataToPdf(trip, "/Applications/MAMP/htdocs/TAS/", pathToPdf);
                 str += "<td><a href=\"http://localhost:8888/TAS/" + pathToPdf + "\">Get trip overview</a></td>";
             } else {
                 str += "<td> <a href=\"/payTrip?id=" + trip.getId() + " \"   >Pay for trip</a></td>";
             }
-           // str += " <td> <input type=\"checkbox\" id=" + trip.getId() + " name=ToDel\"" + trip.getId() + "\" value=\"checked\" /> </td>";
             str += "</tr>";
         }
 
@@ -486,7 +364,7 @@ public class Application extends Controller {
         String str = "";
         return ok(paymentIsOk.render(str));
     }
-    
+
     /**
      * @return page with advertisement
      */
