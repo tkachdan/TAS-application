@@ -109,29 +109,6 @@ public class Application extends Controller {
         return ok(indexLogined.render(str));
     }
 
-    private static Result returnDefaultIndexLogined() {
-        PoiService poiService = new PoiServiceImpl();
-
-        List<Poi> poiList;
-        poiList = poiService.getAllPois();
-        String str = "";
-        int checkboxId = 1;
-        for (Poi p : poiList) {
-            str += "<tr>";
-            str += " <td> <input type=\"checkbox\" id=" + checkboxId + " name=\"" + p.getId() + "\" value=\"checked\" /> </td>";
-            str += "<td>" + p.getId() + "</td> <td>" + p.getName() + "</td> <td>" + p.getType() + "</td> <td>"
-                    + p.getCost() + "</td>";
-            str += "</tr>";
-            checkboxId++;
-        }
-        return ok(indexLogined.render(str));
-    }
-
-    /**
-     * rendering google map with users path between POIs and with detailed description of the path
-     *
-     * @return page with list of choosen pois , google map with path description
-     */
     public static Result renderTrip() {
         if (session().isEmpty()) {
             return ok(login.render(form(Login.LoginForm.class)));
@@ -168,6 +145,8 @@ public class Application extends Controller {
         List<Coordinates> coordList = new ArrayList<>();
         int checkBoxId = 1;
 
+        List<String> trip_array = new ArrayList<>();
+        String string_trip = "";
         for (Poi p : poiList) {
             Coordinates c = new Coordinates();
             c.lat = p.getLatitude();
@@ -182,7 +161,11 @@ public class Application extends Controller {
             str += "</tr>";
 
             checkBoxId++;
+
+            trip_array.add(p.getName());
         }
+
+        string_trip = String.join(" - ", trip_array);
 
         JsonNode json = Json.toJson(coordList);
         return ok(trip.render(str, json, poisString,""));
@@ -536,4 +519,5 @@ public class Application extends Controller {
             this.lat = lat;
         }
     }
+
 }

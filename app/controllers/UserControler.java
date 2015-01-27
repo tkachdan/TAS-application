@@ -23,11 +23,6 @@ public class UserControler extends Controller {
     private static String err = "";
     public static UserForm mem = new UserForm();
 
-    /**
-     * rendering page for user editing
-     *
-     * @return edit user page
-     */
     public static Result renderUser() {
         if (session().isEmpty()) {
             return controllers.Login.renderLogin();
@@ -110,6 +105,7 @@ public class UserControler extends Controller {
             } else {
                 return ActionUpd(form);
             }
+
         }
         if (form.but.equals("Get")) {
             if (!form.id.isEmpty()) {
@@ -237,7 +233,6 @@ public class UserControler extends Controller {
             this.id = "";
         }
 
-
         public void clean() {
             this.designation = "Administrator";
             this.email = "";
@@ -257,11 +252,6 @@ public class UserControler extends Controller {
         }
     }
 
-    /**
-     * error string
-     *
-     * @return
-     */
     public static String getButErr() {
         if (err.isEmpty()) {
             return "none";

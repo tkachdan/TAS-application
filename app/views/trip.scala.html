@@ -1,9 +1,10 @@
 @import com.fasterxml.jackson.databind.JsonNode
-@(message: String)(cord: JsonNode)(poiString: String)(deleted: String)
-
+@(message: String)(cord: JsonNode)(poiString: String)(deleted: String)(road: String)
 
 @main("Trip") {
     <p id="cord" class="invisible">@cord</p>
+
+
     <script src="http://maps.google.com/maps/api/js?key=AIzaSyB7zIjzjoOfTQBuGX2h110tUfoC0Wje430"></script>
 
     <script src="@routes.Assets.at("js/loadMap.js")"></script>
@@ -28,7 +29,6 @@
             </table>
         </div>
         <br>
-
         <input type="hidden" name="pois_to_trip" value="@poiString">
         <button type="submit" id="button" name="button" value="add" class="btn btn-primary">
             Add to cart</button>
@@ -37,7 +37,7 @@
         @*<button type="submit" id="button" name="button" value="return" class="btn btn-primary">*@
             @*Add back</button>*@
     </form>
-
+        
     <a class="button" href="/index-logined">
         <button type="button" class="btn btn-primary" >Back</button>
     </a>
@@ -84,6 +84,20 @@
     } ) ;
     </script>
 
+    <section class="social">
+        <nav class="share">
+            <h3>Share your trip in:</h3>
+            <a target="_blank" href="https://twitter.com/intent/tweet?text=I will travel @road. Join me with TAS!&amp;url=http://example.com/">
+                Twitter</a>
+            <a target="_blank" href="http://www.facebook.com/sharer.php?u=http://example.com/">Facebook</a>
+            <a target="_blank" href="https://plus.google.com/share?url=http://example.com/">Google+</a>
+        </nav>
+        <nav class="print">
+            <h3>To print your trip:</h3>
+            <a href="javascript:window.print();">click here</a>
+        </nav>
+    </section>
+
     <!-- Map support goes here -->
     <!-- logic goes in /js/loadMap.js -->
 
@@ -94,4 +108,5 @@
         <div id="directionsPanel" style="float : right ; width : 30 % ; height 100 %">
             <p>Total Distance: <span id="total"></span></p>
         </div>
+
 }

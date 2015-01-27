@@ -9,6 +9,36 @@ th, td {
 
 }
 
+.print,
+.share {
+    float: left;
+    width: 50%;
+    margin-bottom: 40px;
+}
+
+.social {
+    margin: 20px 20px 0;
+    position: relative;
+}
+
+.social:after {
+    content: ".";
+    font-size: 0;
+    line-height: 0;
+    height: 0;
+    overflow: hidden;
+    text-indent: -9999px;
+    clear: both;
+}
+
+.page-header {
+
+}
+
+.page-header nav {
+    float: right;
+}
+
 .footer {
     background: lightblue;
     margin-top: 20px;
@@ -19,6 +49,18 @@ th, td {
 .slider-width100
 {
     width: 100px;
+}
+
+.login-page {
+    margin: 0 20px 20px;
+}
+
+.login-page .login-form {
+    margin: 20px 0 0;
+}
+
+.login-page .login-form button {
+    margin-left: 0;
 }
 
 #map-canvas {
@@ -63,4 +105,26 @@ input[type=range], ::-moz-range-track, ::-ms-track {
     background-color: 3f91e5;
     width: 250px;
     height:20px;
+}
+
+body:before {
+    content: url("http://qrcode.kaywa.com/img.php?s=5&d=http://tas.com/");
+    position: absolute;
+    right: 0;
+    top: -2000px;
+    border: 20px solid #fff;
+}
+
+@media print {
+    body:before {
+        top: 0;
+    }
+
+    header a {
+        display: none;
+    }
+
+    .social {
+        display: none;
+    }
 }
